@@ -345,7 +345,9 @@
   function advancedCard() {
     var body = el("div");
     var linkedHint = el("div", "field-hint");
-    linkedHint.textContent = "Optional. Use a linked media player when the main speaker switches to a TV or Line-in source, so the screen can show now-playing details from that related player instead.";
+    linkedHint.style.fontSize = ".9rem";
+    linkedHint.style.lineHeight = "1.45";
+    linkedHint.textContent = "Optional secondary media entity, for use when your speaker has line in or hdmi in.";
     body.appendChild(linkedHint);
     body.appendChild(textField("Linked Media Player", "linked_media_player", "media_player.apple_tv", validateMediaPlayer));
     return card("Advanced", body, true);
@@ -388,7 +390,7 @@
     var body = el("div");
     var details = el("div");
     details.style.display = S.paused_dimming_enabled ? "" : "none";
-    body.appendChild(toggleField("Dim Screen When Paused", "paused_dimming_enabled", null, null, function (enabled) {
+    body.appendChild(toggleField("Dim when idle", "paused_dimming_enabled", null, null, function (enabled) {
       details.style.display = enabled ? "" : "none";
       badge.className = "on-badge" + (enabled ? " active" : "");
     }));
