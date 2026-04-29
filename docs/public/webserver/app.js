@@ -348,9 +348,6 @@
     linkedHint.textContent = "Optional. Use a linked media player when the main speaker switches to a TV or Line-in source, so the screen can show now-playing details from that related player instead.";
     body.appendChild(linkedHint);
     body.appendChild(textField("Linked Media Player", "linked_media_player", "media_player.apple_tv", validateMediaPlayer));
-    var rebootHint = el("div", "field-hint");
-    rebootHint.textContent = "Changing this can reboot the device so Home Assistant subscriptions refresh.";
-    body.appendChild(rebootHint);
     return card("Advanced", body, true);
   }
 
