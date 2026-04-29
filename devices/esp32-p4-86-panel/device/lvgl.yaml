@@ -73,7 +73,7 @@ lvgl:
             text_align: center
             hidden: true
 
-        # Darkening layer over artwork (separate from text so transparency works)
+        # Accent color background behind track info
         - obj:
             id: accent_overlay
             x: 0
@@ -81,8 +81,8 @@ lvgl:
             width: 720
             height: 720
             bg_color: 0x000000
-            bg_opa: 80%
-            opa: 80%
+            bg_opa: 100%
+            opa: 100%
             radius: 0
             border_width: 0
             pad_all: 0
@@ -90,7 +90,7 @@ lvgl:
             scrollbar_mode: "off"
             clickable: false
 
-        # Track info text (transparent background, over darkening layer)
+        # Track info text (transparent background, over accent color)
         - obj:
             id: track_info_text
             x: 0
