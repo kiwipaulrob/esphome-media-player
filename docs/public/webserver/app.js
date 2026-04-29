@@ -12,6 +12,9 @@
   fonts.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
   document.head.appendChild(fonts);
 
+  var DEFAULT_SPEAKER_PANEL_TIMEOUT = 10;
+  var SPEAKER_PANEL_TIMEOUT_OPTIONS = [5, 10, 20, 30, 60];
+
   var S = {
     media_player: "",
     linked_media_player: "",
@@ -19,7 +22,7 @@
     show_remaining_time: true,
     show_progress_bar: true,
     track_info_duration: 5,
-    speaker_panel_timeout: 15,
+    speaker_panel_timeout: DEFAULT_SPEAKER_PANEL_TIMEOUT,
     day_active_brightness: 100,
     night_active_brightness: 80,
     day_dim_brightness: 35,
@@ -118,7 +121,7 @@
   var renderTimer = null;
   var evtSource = null;
   var cardCollapsed = {};
-  var lastSpeakerPanelTimeout = 15;
+  var lastSpeakerPanelTimeout = DEFAULT_SPEAKER_PANEL_TIMEOUT;
 
   function eid(domain, name) {
     return "/" + domain + "/" + encodeURIComponent(name);
@@ -215,7 +218,9 @@
       var n = Number(v);
       if (!isNaN(n)) {
         S[key] = n;
-        if (key === "speaker_panel_timeout" && n > 0) lastSpeakerPanelTimeout = n;
+        if (key === "speaker_panel_timeout" && n > 0) {
+          lastSpeakerPanelTimeout = normalizeDurationOption(n, SPEAKER_PANEL_TIMEOUT_OPTIONS, DEFAULT_SPEAKER_PANEL_TIMEOUT);
+        }
       }
     } else if (v != null) {
       S[key] = String(v);
@@ -367,12 +372,14 @@
     var enabled = Number(S.speaker_panel_timeout) > 0;
     timerWrap.style.display = enabled ? "" : "none";
     body.appendChild(localToggleField("Speaker Panel Auto-Close", enabled, function (next) {
-      var value = next ? lastSpeakerPanelTimeout || 15 : 0;
+      var value = next
+        ? normalizeDurationOption(lastSpeakerPanelTimeout || DEFAULT_SPEAKER_PANEL_TIMEOUT, SPEAKER_PANEL_TIMEOUT_OPTIONS, DEFAULT_SPEAKER_PANEL_TIMEOUT)
+        : 0;
       S.speaker_panel_timeout = value;
       if (value > 0) lastSpeakerPanelTimeout = value;
       post(endpoint("speaker_panel_timeout") + "/set", { value: value }).then(renderAll);
     }));
-    timerWrap.appendChild(numberField("Timer", "speaker_panel_timeout"));
+    timerWrap.appendChild(durationSelectField("Timer", "speaker_panel_timeout", SPEAKER_PANEL_TIMEOUT_OPTIONS));
     body.appendChild(timerWrap);
     return card("Volume", body, true);
   }
@@ -410,7 +417,7 @@
       details.style.display = enabled ? "" : "none";
       badge.className = "on-badge" + (enabled ? " active" : "");
     }));
-    details.appendChild(durationSelectField("Start Screen Saver After", "screen_saver_timeout", [10, 30, 60, 120, 300, 600, 1800], formatCompactDurationSeconds));
+    details.appendChild(durationSelectField("Then After", "screen_saver_timeout", [10, 30, 60, 120, 300, 600, 1800], formatCompactDurationSeconds));
     details.appendChild(divider());
     details.appendChild(screenSaverActionField("Daytime Screen Saver", "day_idle_action", function () {
       badge.textContent = idleSummary();
@@ -671,6 +678,7 @@
     var f = field(label);
     f.appendChild(selectFromOptions(options, value, function (next) {
       S[key] = Number(next);
+      if (key === "speaker_panel_timeout" && S[key] > 0) lastSpeakerPanelTimeout = S[key];
       post(endpoint(key) + "/set", { value: S[key] });
     }, formatter || formatDurationSeconds));
     return f;

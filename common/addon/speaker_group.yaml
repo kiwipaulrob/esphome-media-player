@@ -36,6 +36,12 @@ globals:
   - id: speaker_volumes
     type: float[16]
     initial_value: '{0.0f}'
+  - id: speaker_volume_pending_from_pct
+    type: int[16]
+  - id: speaker_volume_pending_direction
+    type: int[16]
+  - id: speaker_volume_pending_until
+    type: uint32_t[16]
 
 text_sensor:
   - platform: homeassistant
@@ -119,6 +125,19 @@ script:
             vols.push_back(v.has_value() ? v.value() : 0.0f);
           }
 
+          std::string old_entity_ids[16];
+          float old_volumes[16];
+          int old_pending_from_pct[16];
+          int old_pending_direction[16];
+          uint32_t old_pending_until[16];
+          for (int i = 0; i < 16; i++) {
+            old_entity_ids[i] = id(speaker_entity_ids)[i];
+            old_volumes[i] = id(speaker_volumes)[i];
+            old_pending_from_pct[i] = id(speaker_volume_pending_from_pct)[i];
+            old_pending_direction[i] = id(speaker_volume_pending_direction)[i];
+            old_pending_until[i] = id(speaker_volume_pending_until)[i];
+          }
+
           // Reset globals
           id(speaker_count) = 0;
           for (int i = 0; i < 16; i++) {
@@ -126,6 +145,9 @@ script:
             id(speaker_names)[i] = "";
             id(speaker_grouped)[i] = false;
             id(speaker_volumes)[i] = 0.0f;
+            id(speaker_volume_pending_from_pct)[i] = -1;
+            id(speaker_volume_pending_direction)[i] = 0;
+            id(speaker_volume_pending_until)[i] = 0;
           }
 
           if (ids.empty()) {
@@ -166,7 +188,39 @@ script:
             }
             id(speaker_entity_ids)[count] = ids[i];
             id(speaker_names)[count] = (i < names.size()) ? names[i] : ids[i];
-            id(speaker_volumes)[count] = (i < vols.size()) ? vols[i] : 0.0f;
+
+            float parsed_volume = (i < vols.size()) ? vols[i] : 0.0f;
+            if (parsed_volume < 0.0f) parsed_volume = 0.0f;
+            if (parsed_volume > 1.0f) parsed_volume = 1.0f;
+            int parsed_pct = (int)(parsed_volume * 100.0f + 0.5f);
+
+            int old_index = -1;
+            for (int j = 0; j < 16; j++) {
+              if (old_entity_ids[j] == ids[i]) {
+                old_index = j;
+                break;
+              }
+            }
+
+            id(speaker_volumes)[count] = parsed_volume;
+            if (old_index >= 0 && old_pending_until[old_index] != 0) {
+              uint32_t now = millis();
+              bool pending_active = (int32_t)(old_pending_until[old_index] - now) > 0;
+              int pending_from = old_pending_from_pct[old_index];
+              int pending_direction = old_pending_direction[old_index];
+              bool stale_echo = pending_active
+                  && ((pending_direction < 0 && parsed_pct >= pending_from)
+                      || (pending_direction > 0 && parsed_pct <= pending_from));
+
+              if (stale_echo) {
+                id(speaker_volumes)[count] = old_volumes[old_index];
+                id(speaker_volume_pending_from_pct)[count] = pending_from;
+                id(speaker_volume_pending_direction)[count] = pending_direction;
+                id(speaker_volume_pending_until)[count] = old_pending_until[old_index];
+                ESP_LOGD("speaker_group", "Ignoring stale volume echo for %s: %d%%",
+                         ids[i].c_str(), parsed_pct);
+              }
+            }
             count++;
           }
           int selected_index = -1;
@@ -180,6 +234,9 @@ script:
             std::swap(id(speaker_entity_ids)[0], id(speaker_entity_ids)[selected_index]);
             std::swap(id(speaker_names)[0], id(speaker_names)[selected_index]);
             std::swap(id(speaker_volumes)[0], id(speaker_volumes)[selected_index]);
+            std::swap(id(speaker_volume_pending_from_pct)[0], id(speaker_volume_pending_from_pct)[selected_index]);
+            std::swap(id(speaker_volume_pending_direction)[0], id(speaker_volume_pending_direction)[selected_index]);
+            std::swap(id(speaker_volume_pending_until)[0], id(speaker_volume_pending_until)[selected_index]);
           }
 
           // Slot 0 is the selected player/leader card, so only sort the rest.
@@ -189,6 +246,9 @@ script:
                 std::swap(id(speaker_entity_ids)[i], id(speaker_entity_ids)[j]);
                 std::swap(id(speaker_names)[i], id(speaker_names)[j]);
                 std::swap(id(speaker_volumes)[i], id(speaker_volumes)[j]);
+                std::swap(id(speaker_volume_pending_from_pct)[i], id(speaker_volume_pending_from_pct)[j]);
+                std::swap(id(speaker_volume_pending_direction)[i], id(speaker_volume_pending_direction)[j]);
+                std::swap(id(speaker_volume_pending_until)[i], id(speaker_volume_pending_until)[j]);
               }
             }
           }
@@ -236,21 +296,40 @@ script:
             id(speaker_names)[i] = "";
             id(speaker_grouped)[i] = false;
             id(speaker_volumes)[i] = 0.0f;
+            id(speaker_volume_pending_from_pct)[i] = -1;
+            id(speaker_volume_pending_direction)[i] = 0;
+            id(speaker_volume_pending_until)[i] = 0;
           }
 
           id(speaker_entity_ids)[0] = entity;
           id(speaker_grouped)[0] = true;
           id(speaker_count) = 1;
 
-          id(speaker_volumes)[0] = id(media_volume_sensor).has_state()
+          float volume = id(media_volume_sensor).has_state()
               ? id(media_volume_sensor).state : 0.0f;
+          if (volume < 0.0f) volume = 0.0f;
+          if (volume > 1.0f) volume = 1.0f;
+          int pct = (int)(volume * 100.0f + 0.5f);
+          if (id(volume_pending_until) != 0) {
+            uint32_t now = millis();
+            bool pending_active = (int32_t)(id(volume_pending_until) - now) > 0;
+            if (pending_active && pct != id(volume_pending_pct)) {
+              pct = id(volume_pending_pct);
+              volume = pct / 100.0f;
+            } else {
+              id(volume_pending_pct) = -1;
+              id(volume_pending_until) = 0;
+            }
+          }
+          id(speaker_volumes)[0] = volume;
 
           // Hide speaker card grid, show volume arc
           lv_obj_add_flag(id(speakers_title_label), LV_OBJ_FLAG_HIDDEN);
           lv_obj_add_flag(id(speakers_container), LV_OBJ_FLAG_HIDDEN);
 
-          int pct = (int)(id(speaker_volumes)[0] * 100.0f);
+          id(volume_updating_from_ha) = true;
           lv_arc_set_value(id(volume_arc), pct);
+          id(volume_updating_from_ha) = false;
           char buf[8];
           snprintf(buf, sizeof(buf), "%d%%", pct);
           lv_label_set_text(id(volume_pct_label), buf);
@@ -370,7 +449,7 @@ script:
               lv_label_set_text(name_labels[i], id(speaker_names)[i].c_str());
 
               if (id(speaker_grouped)[i]) {
-                int pct = (int)(id(speaker_volumes)[i] * 100.0f);
+                int pct = (int)(id(speaker_volumes)[i] * 100.0f + 0.5f);
                 char vol_buf[8];
                 snprintf(vol_buf, sizeof(vol_buf), "%d%%", pct);
                 lv_label_set_text(vol_labels[i], vol_buf);
@@ -410,7 +489,7 @@ script:
               break;
             }
           }
-          int group_pct = (int)(group_vol * 100.0f);
+          int group_pct = (int)(group_vol * 100.0f + 0.5f);
           char grp_buf[8];
           snprintf(grp_buf, sizeof(grp_buf), "%d%%", group_pct);
           lv_label_set_text(id(group_vol_label), grp_buf);
@@ -489,6 +568,17 @@ script:
       - lambda: |-
           if (slot < 0 || slot >= id(speaker_count)) return;
           id(speaker_vol_target) = id(speaker_entity_ids)[slot];
+          int current_pct = (int)(id(speaker_volumes)[slot] * 100.0f + 0.5f);
+          int optimistic_pct = current_pct + (direction > 0 ? 1 : -1);
+          if (optimistic_pct < 0) optimistic_pct = 0;
+          if (optimistic_pct > 100) optimistic_pct = 100;
+          if (optimistic_pct != current_pct) {
+            id(speaker_volumes)[slot] = optimistic_pct / 100.0f;
+            id(speaker_volume_pending_from_pct)[slot] = current_pct;
+            id(speaker_volume_pending_direction)[slot] = direction > 0 ? 1 : -1;
+            id(speaker_volume_pending_until)[slot] = millis() + 1500;
+            id(update_grouping_panel).execute();
+          }
       - homeassistant.service:
           service: !lambda 'return direction > 0 ? "media_player.volume_up" : "media_player.volume_down";'
           variables:
@@ -535,6 +625,20 @@ script:
               id(group_vol_index) = i + 1;
               return true;
           then:
+            - lambda: |-
+                int slot = id(group_vol_index) - 1;
+                if (slot < 0 || slot >= id(speaker_count)) return;
+                int current_pct = (int)(id(speaker_volumes)[slot] * 100.0f + 0.5f);
+                int optimistic_pct = current_pct + (direction > 0 ? 1 : -1);
+                if (optimistic_pct < 0) optimistic_pct = 0;
+                if (optimistic_pct > 100) optimistic_pct = 100;
+                if (optimistic_pct != current_pct) {
+                  id(speaker_volumes)[slot] = optimistic_pct / 100.0f;
+                  id(speaker_volume_pending_from_pct)[slot] = current_pct;
+                  id(speaker_volume_pending_direction)[slot] = direction > 0 ? 1 : -1;
+                  id(speaker_volume_pending_until)[slot] = millis() + 1500;
+                  id(update_grouping_panel).execute();
+                }
             - homeassistant.service:
                 service: !lambda 'return direction > 0 ? "media_player.volume_up" : "media_player.volume_down";'
                 variables:
