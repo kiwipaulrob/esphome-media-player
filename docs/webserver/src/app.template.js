@@ -457,7 +457,7 @@
   }
 
   function screenSaverCard() {
-    var badge = badgeFor(S.screen_saver_enabled, idleSummary());
+    var badge = badgeFor(S.screen_saver_enabled);
     var body = el("div");
     var details = el("div");
     details.style.display = S.screen_saver_enabled ? "" : "none";
@@ -468,7 +468,6 @@
     }));
     details.appendChild(durationSelectField("Start Screen Saver After", "screen_saver_timeout", [10, 30, 60, 120, 300, 600, 1800]));
     details.appendChild(screenSaverActionField("Daytime Screen Saver", "day_idle_action", function () {
-      badge.textContent = idleSummary();
       renderAll();
     }));
     var dayDetails = el("div");
@@ -477,7 +476,6 @@
     dayDetails.appendChild(el("div", "spacer-8"));
     details.appendChild(dayDetails);
     details.appendChild(screenSaverActionField("Evening Screen Saver", "night_idle_action", function () {
-      badge.textContent = idleSummary();
       renderAll();
     }));
     var eveningDetails = el("div");
@@ -764,13 +762,6 @@
 
   function usesEveningClockAction() {
     return normalizeScreenSaverAction(S.night_idle_action) === "Clock";
-  }
-
-  function idleSummary() {
-    var day = screenSaverActionLabel(S.day_idle_action);
-    var evening = screenSaverActionLabel(S.night_idle_action);
-    if (day === evening) return day;
-    return "Mixed";
   }
 
   function normalizeScreenSaverAction(value) {
