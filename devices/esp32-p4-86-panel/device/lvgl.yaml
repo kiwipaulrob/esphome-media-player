@@ -2470,5 +2470,6 @@ lvgl:
               - label:
                   id: clock_label
                   text_font: roboto_thin160_font
+                  align: center
                   text_color: 0xFFFFFF
                   text: "00:00"

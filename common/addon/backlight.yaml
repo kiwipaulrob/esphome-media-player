@@ -111,7 +111,7 @@ number:
                 id: backlight
                 brightness: !lambda |-
                   bool is_day = id(day_night_sensor_entity).state.empty()
-                      ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                      ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                       : id(custom_day_night_is_day);
                   return (is_day ? x : id(backlight_night_active_brightness).state) / 100.0f;
                 transition_length: 500ms
@@ -138,7 +138,7 @@ number:
                 id: backlight
                 brightness: !lambda |-
                   bool is_day = id(day_night_sensor_entity).state.empty()
-                      ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                      ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                       : id(custom_day_night_is_day);
                   return (is_day ? id(backlight_day_active_brightness).state : x) / 100.0f;
                 transition_length: 500ms
@@ -516,16 +516,20 @@ script:
                       id: backlight
                       brightness: !lambda |-
                         bool is_day = id(day_night_sensor_entity).state.empty()
-                            ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                            ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                             : id(custom_day_night_is_day);
-                        return (is_day ? id(clock_brightness).state : id(evening_clock_brightness).state) / 100.0f;
+                        float pct = is_day ? id(clock_brightness).state : id(evening_clock_brightness).state;
+                        if (!(pct > 0.0f)) pct = 35.0f;
+                        if (pct < 1.0f) pct = 1.0f;
+                        if (pct > 100.0f) pct = 100.0f;
+                        return pct / 100.0f;
                       transition_length: 500ms
                 else:
                   - light.turn_on:
                       id: backlight
                       brightness: !lambda |-
                         bool is_day = id(day_night_sensor_entity).state.empty()
-                            ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                            ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                             : id(custom_day_night_is_day);
                         float pct = id(is_screen_dimmed)
                           ? (is_day ? id(backlight_day_brightness).state : id(backlight_night_brightness).state)
@@ -581,7 +585,7 @@ script:
           id: backlight
           brightness: !lambda |-
             bool is_day = id(day_night_sensor_entity).state.empty()
-                ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                 : id(custom_day_night_is_day);
             float pct = is_day
               ? id(backlight_day_active_brightness).state
@@ -613,7 +617,7 @@ script:
                 id: backlight
                 brightness: !lambda |-
                   bool is_day = id(day_night_sensor_entity).state.empty()
-                      ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                      ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                       : id(custom_day_night_is_day);
                   float pct = is_day
                     ? id(backlight_day_brightness).state
@@ -639,7 +643,7 @@ script:
                       condition:
                         lambda: |-
                           bool is_day = id(day_night_sensor_entity).state.empty()
-                              ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                              ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                               : id(custom_day_night_is_day);
                           std::string action = is_day
                             ? id(day_idle_action).current_option()
@@ -652,7 +656,7 @@ script:
                             condition:
                               lambda: |-
                                 bool is_day = id(day_night_sensor_entity).state.empty()
-                                    ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                                    ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                                     : id(custom_day_night_is_day);
                                 std::string action = is_day
                                   ? id(day_idle_action).current_option()
@@ -716,9 +720,13 @@ script:
           id: backlight
           brightness: !lambda |-
             bool is_day = id(day_night_sensor_entity).state.empty()
-                ? (id(sun_state_sensor).has_state() && id(sun_state_sensor).state == "above_horizon")
+                ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                 : id(custom_day_night_is_day);
-            return (is_day ? id(clock_brightness).state : id(evening_clock_brightness).state) / 100.0f;
+            float pct = is_day ? id(clock_brightness).state : id(evening_clock_brightness).state;
+            if (!(pct > 0.0f)) pct = 35.0f;
+            if (pct < 1.0f) pct = 1.0f;
+            if (pct > 100.0f) pct = 100.0f;
+            return pct / 100.0f;
           transition_length: 3s
 
   - id: refresh_clock_label
@@ -730,18 +738,21 @@ script:
           setenv("TZ", id(tz_posix).c_str(), 1);
           tzset();
           auto time = id(ha_time).now();
-          if (!time.is_valid()) return;
-          char buf[6];
-          snprintf(buf, sizeof(buf), "%02d:%02d", time.hour, time.minute);
-          lv_label_set_text(id(clock_label), buf);
+          int minute = 0;
+          if (time.is_valid()) {
+            char buf[6];
+            snprintf(buf, sizeof(buf), "%02d:%02d", time.hour, time.minute);
+            lv_label_set_text(id(clock_label), buf);
+            minute = time.minute;
+          }
           lv_obj_update_layout(id(clock_screensaver));
           lv_obj_update_layout(id(clock_label));
           lv_coord_t w = lv_obj_get_width(id(clock_label));
           lv_coord_t h = lv_obj_get_height(id(clock_label));
           int cx = lv_obj_get_width(id(clock_screensaver)) / 2;
           int cy = lv_obj_get_height(id(clock_screensaver)) / 2;
-          int ox = (time.minute * 7) % 25 - 12;
-          int oy = (time.minute * 13) % 17 - 8;
+          int ox = (minute * 7) % 25 - 12;
+          int oy = (minute * 13) % 17 - 8;
           lv_obj_set_pos(id(clock_label), cx + ox - w/2, cy + oy - h/2);
           lv_obj_invalidate(id(clock_screensaver));
           lv_obj_invalidate(id(clock_label));
