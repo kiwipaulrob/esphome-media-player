@@ -15,3 +15,4 @@ If you prefer to install via the ESPHome dashboard, see [ESPHome Config](/advanc
 ## Where to Buy
 
 - **Panel:** [Waveshare](https://www.waveshare.com/esp32-p4-wifi6-touch-lcd-4b.htm)
+- **Desktop stand (3D printable):** [MakerWorld](https://makerworld.com/en/models/2720366-waveshare-esp32-p4-smart-86-box-screen-desk-stand#profileId-3013481)
