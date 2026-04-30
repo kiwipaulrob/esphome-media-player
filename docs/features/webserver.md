@@ -53,7 +53,11 @@ When this value is saved, the device may reboot so the firmware can subscribe to
 
 The device serves the settings page on port `80`. The firmware uses the project's hosted web UI bundle, so the device needs internet access the first time your browser loads the page.
 
-The browser talks directly to the device while you make changes. On the 4" ESP32-S3 display, opening the webserver also shows a **Web settings active** screen on the device while the browser is connected.
+The browser talks directly to the device while you make changes.
+
+::: info 4" ESP32-S3 displays
+Opening the webserver shows a **Web settings active** screen on the device while the browser is connected. This conserves available memory while the settings page is in use. Closing the browser tab or otherwise ending the connection restores the normal media player screen.
+:::
 
 ## Troubleshooting
 
