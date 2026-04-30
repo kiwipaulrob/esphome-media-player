@@ -6,8 +6,6 @@ The web settings page runs on the device's ESPHome web server on port `80`. It u
 
 Some configuration entities may also appear on the Home Assistant device page, depending on the device model, but the web settings page is the main place to configure current firmware.
 
-![Device settings](../images/ha-device-settings.png)
-
 ## Media Player
 
 | Setting | Description |
