@@ -4,9 +4,6 @@ Control multi-room speaker groups directly from the touchscreen panel. The setti
 
 ![Speaker grouping panel](/images/guition-esp32-p4-jc8012p4a1-multi-speaker.jpg)
 
-> [!WARNING]
-> This feature is in **beta**. If you encounter any issues, please [open an issue on GitHub](https://github.com/jtenniswood/esphome-media-player/issues).
-
 ## How it works
 
 - The panel auto-discovers all speakers from the configured integration in your Home Assistant instance
