@@ -81,6 +81,5 @@ Album art can be shifted toward warmer colors for a more comfortable viewing exp
 If you find this project useful, consider buying me a coffee to support ongoing development!
 
 <a href="https://www.buymeacoffee.com/jtenniswood" target="_blank">
-  <span>Buy me a coffee</span><br />
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50" />
 </a>
