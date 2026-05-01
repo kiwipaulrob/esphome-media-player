@@ -52,6 +52,12 @@ The [documentation site](https://jtenniswood.github.io/esphome-media-player/) ha
 
 ---
 
+## Developer/Experimental Features
+
+Experimental behaviour is included in normal release builds, but it must stay disabled unless explicitly enabled. Open the device web UI with `?developer=experimental`, turn on **Developer/Experimental Features**, and make experimental code check `id(developer_experimental_features).state` before running.
+
+---
+
 ## Feedback
 
 If you have any feedback or suggestions, please open an [issue](https://github.com/jtenniswood/esphome-media-player/issues).

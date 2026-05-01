@@ -56,6 +56,7 @@
     firmware_release_url: "",
     firmware_checking: false,
     update_available: false,
+    developer_experimental_features: false,
     device_profile: "",
     online: false,
     wifi_strength: null,
@@ -94,6 +95,7 @@
     update_frequency: { domain: "select", name: "Firmware: Update Frequency", optionsKey: "update_frequency_options" },
     firmware_update: { domain: "update", name: "Firmware: Update", update: true },
     check_latest: { domain: "button", name: "Firmware: Check for Update", skipFetch: true },
+    developer_experimental_features: { domain: "switch", name: "Developer: Experimental Features", bool: true },
     device_profile: { domain: "text_sensor", name: "Device Profile" },
     online: { domain: "binary_sensor", name: "Online", bool: true },
     wifi_strength: { domain: "sensor", name: "Wifi Strength", number: true },
@@ -186,6 +188,14 @@
 
   function isS3Display() {
     return S.device_profile === S3_DEVICE_PROFILE;
+  }
+
+  function isDeveloperExperimentalMode() {
+    try {
+      return new URLSearchParams(window.location.search).get("developer") === "experimental";
+    } catch (_) {
+      return false;
+    }
   }
 
   function webActivityEndpoint(name) {
@@ -393,6 +403,7 @@
     content.appendChild(idleScreenCard());
     content.appendChild(screenSaverCard());
     content.appendChild(nightScheduleCard());
+    if (isDeveloperExperimentalMode()) content.appendChild(developerCard());
 
     wrap.appendChild(content);
   }
@@ -513,6 +524,15 @@
     details.appendChild(durationSelectField("When Woken, Idle Time To Screen Off", "schedule_wake_timeout"));
     body.appendChild(details);
     return card("Night Schedule", body, true, badge);
+  }
+
+  function developerCard() {
+    var badge = badgeFor(S.developer_experimental_features);
+    var body = el("div");
+    body.appendChild(toggleField("Developer/Experimental Features", "developer_experimental_features", null, null, function (enabled) {
+      badge.className = "on-badge" + (enabled ? " active" : "");
+    }));
+    return card("Developer", body, true, badge);
   }
 
   function screenBrightnessCard() {
