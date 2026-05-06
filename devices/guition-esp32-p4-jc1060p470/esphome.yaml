@@ -7,6 +7,10 @@ substitutions:
   # Native LVGL display rotation.
   # display_rotation: "180"
 
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
 # Wifi Setup
 wifi:
   ssid: !secret wifi_ssid

@@ -16,21 +16,15 @@ Install the media player firmware via the ESPHome dashboard instead of the web i
 
 In the ESPHome dashboard, create a new YAML configuration for your device. Use one of the examples below as a starting point.
 
+These examples import the complete per-device entry config from this repository. That imported file provides the `esphome:` section and uses your ESPHome `wifi_ssid` / `wifi_password` secrets for Wi-Fi.
+
 ### ESP32-S3 4848S040 (4")
 
 ```yaml
-substitutions:
-  name: "music-dashboard"
-  friendly_name: "Music Dashboard"
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-s3-4848s040/packages.yaml]
+    files: [devices/guition-esp32-s3-4848s040/esphome.yaml]
     ref: main
     refresh: 1s
 ```
@@ -38,18 +32,10 @@ packages:
 ### ESP32-P4 JC8012P4A1 (10.1")
 
 ```yaml
-substitutions:
-  name: "music-dashboard-10inch"
-  friendly_name: "Music Dashboard 10inch"
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-p4-jc8012p4a1/packages.yaml]
+    files: [devices/guition-esp32-p4-jc8012p4a1/esphome.yaml]
     ref: main
     refresh: 1s
 ```
@@ -57,18 +43,10 @@ packages:
 ### ESP32-P4 JC1060P470 (7")
 
 ```yaml
-substitutions:
-  name: "music-dashboard-7inch"
-  friendly_name: "Music Dashboard 7inch"
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-p4-jc1060p470/packages.yaml]
+    files: [devices/guition-esp32-p4-jc1060p470/esphome.yaml]
     ref: main
     refresh: 1s
 ```
@@ -76,18 +54,10 @@ packages:
 ### ESP32-P4 JC4880P443 (4.3")
 
 ```yaml
-substitutions:
-  name: "music-dashboard-43inch"
-  friendly_name: "Music Dashboard 4.3inch"
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-p4-jc4880p443/packages.yaml]
+    files: [devices/guition-esp32-p4-jc4880p443/esphome.yaml]
     ref: main
     refresh: 1s
 ```
@@ -95,18 +65,10 @@ packages:
 ### ESP32-P4 86 Panel (4")
 
 ```yaml
-substitutions:
-  name: "music-dashboard"
-  friendly_name: "Music Dashboard"
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/esp32-p4-86-panel/packages.yaml]
+    files: [devices/esp32-p4-86-panel/esphome.yaml]
     ref: main
     refresh: 1s
 ```

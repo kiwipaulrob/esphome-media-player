@@ -7,6 +7,10 @@ substitutions:
   # Native LVGL display rotation. Use packages-90.yaml for landscape.
   # display_rotation: "180"
 
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
 # Wifi Setup
 wifi:
   ssid: !secret wifi_ssid

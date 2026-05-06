@@ -7,6 +7,10 @@ substitutions:
   # Display rotation: 0, 90 (default landscape), 180, or 270
   # display_rotation: "0"
 
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
 # Wifi Setup
 wifi:
   ssid: !secret wifi_ssid
