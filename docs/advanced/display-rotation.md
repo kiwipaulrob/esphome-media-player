@@ -26,12 +26,18 @@ The 480×480 square display supports all four rotations.
 
 ```yaml
 substitutions:
+  name: "music-dashboard"
+  friendly_name: "Music Dashboard"
   display_rotation: "90"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-s3-4848s040/esphome.yaml]
+    files: [devices/guition-esp32-s3-4848s040/packages.yaml]
     ref: main
     refresh: 1s
 ```
@@ -40,12 +46,18 @@ packages:
 
 ```yaml
 substitutions:
+  name: "music-dashboard"
+  friendly_name: "Music Dashboard"
   display_rotation: "270"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-s3-4848s040/esphome.yaml]
+    files: [devices/guition-esp32-s3-4848s040/packages.yaml]
     ref: main
     refresh: 1s
 ```
@@ -70,7 +82,7 @@ substitutions:
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/esp32-p4-86-panel/esphome.yaml]
+    files: [devices/esp32-p4-86-panel/packages.yaml]
     ref: main
     refresh: 1s
 ```
@@ -92,12 +104,18 @@ The device also exposes **Screen Rotation** in Home Assistant as a dropdown with
 
 ```yaml
 substitutions:
+  name: "music-dashboard-10inch"
+  friendly_name: "Music Dashboard 10inch"
   display_rotation: "0"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-p4-jc8012p4a1/esphome.yaml]
+    files: [devices/guition-esp32-p4-jc8012p4a1/packages.yaml]
     ref: main
     refresh: 1s
 ```
@@ -119,12 +137,18 @@ The device also exposes **Screen Rotation** in Home Assistant as a dropdown with
 
 ```yaml
 substitutions:
+  name: "music-dashboard-7inch"
+  friendly_name: "Music Dashboard 7inch"
   display_rotation: "180"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-p4-jc1060p470/esphome.yaml]
+    files: [devices/guition-esp32-p4-jc1060p470/packages.yaml]
     ref: main
     refresh: 1s
 ```
@@ -146,12 +170,18 @@ The device also exposes **Screen Rotation** in Home Assistant as a dropdown with
 
 ```yaml
 substitutions:
+  name: "music-dashboard-43inch"
+  friendly_name: "Music Dashboard 4.3inch"
   display_rotation: "180"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 packages:
   music_dashboard:
     url: https://github.com/jtenniswood/esphome-media-player
-    files: [devices/guition-esp32-p4-jc4880p443/esphome.yaml]
+    files: [devices/guition-esp32-p4-jc4880p443/packages.yaml]
     ref: main
     refresh: 1s
 ```
