@@ -453,7 +453,7 @@ touchscreen:
 # mode: restart – cancels the in-progress run and starts fresh
 # -----------------------------------------------------------------------------
 script:
-  # -- Reapply JC1060P470 horizontal pixel-aspect compensation --
+  # -- Reapply JC1060P470 horizontal pixel-aspect compensation for non-text UI --
   - id: apply_horizontal_adjustment
     mode: restart
     then:
@@ -470,20 +470,7 @@ script:
           };
 
           apply_adjustment(id(album_art_background_widget), true);
-          apply_adjustment(id(artwork_error_label));
-          apply_adjustment(id(media_title_label));
-          apply_adjustment(id(media_artist_label));
-          apply_adjustment(id(media_time_label));
-          apply_adjustment(id(media_play_pause_button));
-          apply_adjustment(id(media_play_icon));
-          apply_adjustment(id(media_pause_icon));
           apply_adjustment(id(volume_arc));
-          apply_adjustment(id(volume_title_label));
-          apply_adjustment(id(volume_pct_label));
-          apply_adjustment(id(volume_down_button));
-          apply_adjustment(id(volume_down_icon));
-          apply_adjustment(id(volume_up_button));
-          apply_adjustment(id(volume_up_icon));
 
   # -- Apply Home Assistant screen-rotation dropdown using native LVGL rotation --
   - id: apply_screen_rotation
