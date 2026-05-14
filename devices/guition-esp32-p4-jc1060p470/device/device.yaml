@@ -544,13 +544,13 @@ script:
           if (landscape) {
             lv_obj_set_pos(id(accent_overlay), 585, 0);
             lv_obj_set_size(id(accent_overlay), 439, 600);
-            lv_obj_set_pos(id(track_info_text), 615, 20);
+            lv_obj_set_pos(id(track_info_text), 615, 34);
             lv_obj_set_size(id(track_info_text), 377, 430);
             lv_obj_set_style_max_height(id(media_title_label), 340, 0);
           } else {
             lv_obj_set_pos(id(accent_overlay), 0, 600);
             lv_obj_set_size(id(accent_overlay), 600, 424);
-            lv_obj_set_pos(id(track_info_text), 40, 636);
+            lv_obj_set_pos(id(track_info_text), 40, 620);
             lv_obj_set_size(id(track_info_text), 520, 300);
             lv_obj_set_style_max_height(id(media_title_label), 170, 0);
           }
