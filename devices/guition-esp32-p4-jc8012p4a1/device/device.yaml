@@ -162,7 +162,7 @@ logger:
 external_components:
   - source: github://jtenniswood/esphome-media-player@main
     components: [gsl3680]
-    refresh: 1s
+    refresh: 1d
 
 
 # DSI PHY power rail

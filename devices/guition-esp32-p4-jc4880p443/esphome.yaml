@@ -22,4 +22,4 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-p4-jc4880p443/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d

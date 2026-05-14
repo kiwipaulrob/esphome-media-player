@@ -40,6 +40,19 @@ esphome compile /config/music-7inch.yaml
 
 If the dashboard clean option is not available, delete the affected build folder under `/config/.esphome/build/` for that device and compile again.
 
+## Firmware compile fails with missing `.git/HEAD`
+
+If ESPHome fails while reading the configuration with an error like `No such file or directory: '/config/.esphome/external_components/.../.git/HEAD'`, ESPHome has a broken cached copy of the project's external component checkout.
+
+Delete the affected folder named in the error, then compile again. For example:
+
+```bash
+rm -rf /config/.esphome/external_components/5376f726
+esphome compile /config/music-7inch.yaml
+```
+
+If the folder name is different in your error, delete that folder instead. If you are unsure which folder is affected, deleting `/config/.esphome/external_components/` is also safe; ESPHome will download the external components again on the next compile.
+
 ## The screen is black / not responding
 
 - Verify the device is powered via the USB-C port with an adequate power supply (5V 2A recommended).

@@ -20,4 +20,4 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/esp32-p4-86-panel/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d

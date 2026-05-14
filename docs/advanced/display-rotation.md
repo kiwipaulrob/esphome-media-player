@@ -39,7 +39,7 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-s3-4848s040/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
 ```
 
 ### Example: 270-degree rotation
@@ -59,7 +59,7 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-s3-4848s040/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
 ```
 
 ## ESP32-P4 86 Panel
@@ -84,7 +84,7 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/esp32-p4-86-panel/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
 ```
 
 ## ESP32-P4 JC8012P4A1
@@ -117,7 +117,7 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-p4-jc8012p4a1/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
 ```
 
 ## ESP32-P4 JC1060P470
@@ -150,7 +150,7 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-p4-jc1060p470/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
 ```
 
 ## ESP32-P4 JC4880P443
@@ -183,5 +183,5 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-p4-jc4880p443/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
 ```

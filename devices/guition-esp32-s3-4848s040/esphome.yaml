@@ -20,4 +20,4 @@ packages:
     url: https://github.com/jtenniswood/esphome-media-player
     files: [devices/guition-esp32-s3-4848s040/packages.yaml]
     ref: main
-    refresh: 1s
+    refresh: 1d
