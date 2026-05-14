@@ -31,7 +31,7 @@ Use this tab for the main setup and day-to-day display behaviour:
 
 Use this tab for device-wide options and maintenance:
 
-- **Clock** — choose the timezone used by the on-screen clock and schedules.
+- **Clock** — choose the on-screen clock format and timezone used by schedules.
 - **Day/Night** — optionally provide a Home Assistant entity to control day and night mode.
 - **Screen Brightness** — set active daytime and night-time brightness.
 - **Screen Tone** — adjust warm tinting for album art on ESP32-P4 devices.

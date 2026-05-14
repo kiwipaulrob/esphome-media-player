@@ -23,6 +23,8 @@ Any touch or new media playback instantly returns the display to full active bri
 
 The optional clock screen saver displays the current time in large, thin digits on a black background. Choose **Clock** as the day or evening screen saver to use it.
 
+Set **Clock Format** to choose 24-hour time or 12-hour time. The 12-hour clock does not show AM/PM, keeping the digits compact enough for the clock to keep drifting for burn-in prevention.
+
 The clock position drifts subtly each minute across a small region to prevent burn-in. Brightness is controlled independently for day and evening clock screen savers (default: 35%).
 
 ## Night Schedule
@@ -73,6 +75,7 @@ This is useful when you want day/night to depend on more than just the sun — f
 | **Evening Screen Saver** | What happens after the idle timer in the evening: Clock, Screen Off, or Disabled. | Clock |
 | **Day Clock Brightness** | Backlight level for the daytime clock screen saver. | 35% |
 | **Evening Clock Brightness** | Backlight level for the evening clock screen saver. | 35% |
+| **Clock Format** | Clock display format: 24-hour or 12-hour without AM/PM. | 24 Hour |
 | **Timezone** | IANA-style timezone for the clock and scheduled screen-off controls. The browser shows the current GMT offset. | UTC |
 
 ### Night Schedule
