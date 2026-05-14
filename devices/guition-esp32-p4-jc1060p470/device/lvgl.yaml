@@ -153,9 +153,9 @@ lvgl:
             align: bottom_right
             x: -32
             y: -32
-            width: 96px
-            height: 96px
-            radius: 48
+            width: 108px
+            height: 108px
+            radius: 54
             styles: control_round
             widgets:
               - label:
