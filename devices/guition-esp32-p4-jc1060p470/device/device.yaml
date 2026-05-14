@@ -453,20 +453,25 @@ touchscreen:
 # mode: restart – cancels the in-progress run and starts fresh
 # -----------------------------------------------------------------------------
 script:
-  # -- Reapply JC1060P470 horizontal pixel-aspect compensation for selected UI --
+  # -- Reapply JC1060P470 pixel-aspect compensation for selected UI --
   - id: apply_horizontal_adjustment
     mode: restart
     then:
       - lambda: |-
-          auto apply_adjustment = [](lv_obj_t *obj, bool pin_left_edge = false) {
+          const bool compensate_vertical =
+            id(screen_rotation_select).current_option() == "90" ||
+            id(screen_rotation_select).current_option() == "270";
+
+          auto apply_adjustment = [compensate_vertical](lv_obj_t *obj, bool pin_start_edge = false) {
             if (obj == nullptr) {
               return;
             }
             const lv_coord_t width = lv_obj_get_width(obj);
             const lv_coord_t height = lv_obj_get_height(obj);
-            lv_obj_set_style_transform_pivot_x(obj, pin_left_edge ? 0 : width / 2, 0);
-            lv_obj_set_style_transform_pivot_y(obj, height / 2, 0);
-            lv_obj_set_style_transform_scale_x(obj, ${horizontal_adjustment_scale_x}, 0);
+            lv_obj_set_style_transform_pivot_x(obj, pin_start_edge && !compensate_vertical ? 0 : width / 2, 0);
+            lv_obj_set_style_transform_pivot_y(obj, pin_start_edge && compensate_vertical ? 0 : height / 2, 0);
+            lv_obj_set_style_transform_scale_x(obj, compensate_vertical ? 256 : ${horizontal_adjustment_scale_x}, 0);
+            lv_obj_set_style_transform_scale_y(obj, compensate_vertical ? ${horizontal_adjustment_scale_x} : 256, 0);
           };
 
           apply_adjustment(id(album_art_background_widget), true);

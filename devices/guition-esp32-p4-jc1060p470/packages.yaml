@@ -58,7 +58,7 @@ substitutions:
   layout_track_y: "34"
   layout_track_width: "377"
   layout_track_height: "430"
-  layout_title_max_height: "260px"
+  layout_title_max_height: "340px"
   layout_progress_width: "1024"
   layout_settings_width: "1024"
   layout_settings_height: "600"
