@@ -458,18 +458,18 @@ script:
     mode: restart
     then:
       - lambda: |-
-          auto apply_adjustment = [](lv_obj_t *obj) {
+          auto apply_adjustment = [](lv_obj_t *obj, bool pin_left_edge = false) {
             if (obj == nullptr) {
               return;
             }
             const lv_coord_t width = lv_obj_get_width(obj);
             const lv_coord_t height = lv_obj_get_height(obj);
-            lv_obj_set_style_transform_pivot_x(obj, width / 2, 0);
+            lv_obj_set_style_transform_pivot_x(obj, pin_left_edge ? 0 : width / 2, 0);
             lv_obj_set_style_transform_pivot_y(obj, height / 2, 0);
             lv_obj_set_style_transform_scale_x(obj, ${horizontal_adjustment_scale_x}, 0);
           };
 
-          apply_adjustment(id(album_art_background_widget));
+          apply_adjustment(id(album_art_background_widget), true);
           apply_adjustment(id(artwork_error_label));
           apply_adjustment(id(media_title_label));
           apply_adjustment(id(media_artist_label));
