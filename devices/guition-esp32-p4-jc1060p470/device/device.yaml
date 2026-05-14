@@ -470,6 +470,7 @@ script:
           };
 
           apply_adjustment(id(album_art_background_widget), true);
+          apply_adjustment(id(media_play_pause_button));
           apply_adjustment(id(volume_arc));
 
   # -- Apply Home Assistant screen-rotation dropdown using native LVGL rotation --
