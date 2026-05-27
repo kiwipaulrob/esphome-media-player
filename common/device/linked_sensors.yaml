@@ -111,6 +111,18 @@ text_sensor:
                   - script.execute: ensure_artwork_download_stagger
                   - script.wait: ensure_artwork_download_stagger
                   - delay: !lambda 'return static_cast<uint32_t>(50 + id(artwork_download_stagger_ms));'
+                  - if:
+                      condition:
+                        lambda: 'return ${release_artwork_before_download};'
+                      then:
+                        - lvgl.image.update:
+                            id: album_art_background_widget
+                            src: album_art_placeholder
+                        - lvgl.widget.update:
+                            id: album_art_background_widget
+                            opa: 50%
+                        - artwork_image.release: tv_art_background
+                        - delay: 100ms
                   - artwork_image.set_url:
                       id: tv_art_background
                       url: !lambda 'return id(last_tv_artwork_url);'
@@ -248,6 +260,18 @@ text_sensor:
                               - script.execute: ensure_artwork_download_stagger
                               - script.wait: ensure_artwork_download_stagger
                               - delay: !lambda 'return static_cast<uint32_t>(50 + id(artwork_download_stagger_ms));'
+                              - if:
+                                  condition:
+                                    lambda: 'return ${release_artwork_before_download};'
+                                  then:
+                                    - lvgl.image.update:
+                                        id: album_art_background_widget
+                                        src: album_art_placeholder
+                                    - lvgl.widget.update:
+                                        id: album_art_background_widget
+                                        opa: 50%
+                                    - artwork_image.release: tv_art_background
+                                    - delay: 100ms
                               - artwork_image.set_url:
                                   id: tv_art_background
                                   url: !lambda 'return id(last_tv_artwork_url);'

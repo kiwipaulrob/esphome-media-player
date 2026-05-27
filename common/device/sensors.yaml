@@ -176,6 +176,18 @@ script:
             lambda: 'return !id(web_settings_active);'
           then:
             - lvgl.widget.hide: artwork_error_label
+            - if:
+                condition:
+                  lambda: 'return ${release_artwork_before_download};'
+                then:
+                  - lvgl.image.update:
+                      id: album_art_background_widget
+                      src: album_art_placeholder
+                  - lvgl.widget.update:
+                      id: album_art_background_widget
+                      opa: 50%
+                  - artwork_image.release: album_art_background
+                  - delay: 100ms
             - artwork_image.set_url:
                 id: album_art_background
                 url: !lambda 'return id(last_artwork_url);'

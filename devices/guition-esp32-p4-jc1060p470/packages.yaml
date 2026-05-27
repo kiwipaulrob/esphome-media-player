@@ -21,6 +21,7 @@ substitutions:
   warm_tone_blue_reduce: "0.28f"
   artwork_contrast_boost: "0.04f"
   artwork_saturation_boost: "0.10f"
+  release_artwork_before_download: "true"
   track_info_duration_default: "0"
   pause_lvgl_on_screen_off: "true"
   clock_screensaver_supported: "true"

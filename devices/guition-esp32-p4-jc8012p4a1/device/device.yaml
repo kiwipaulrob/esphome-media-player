@@ -40,8 +40,6 @@ esphome:
     board_build.flash_mode: dio
     build_flags:
       - "-DCONFIG_LV_DISP_DEF_REFR_PERIOD=10"
-      - "-DLV_DRAW_SW_SUPPORT_RGB565=1"
-      - "-DCONFIG_COMPILER_OPTIMIZATION_PERF=y"
       - "-Wno-deprecated-declarations"
 
 
@@ -636,6 +634,14 @@ script:
                       id(last_tv_artwork_url) = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
                       id(last_tv_artwork_url) = esphome::artwork_image::cap_artwork_url(id(last_tv_artwork_url), 800);
                   - delay: 50ms
+                  - lvgl.image.update:
+                      id: album_art_background_widget
+                      src: album_art_placeholder
+                  - lvgl.widget.update:
+                      id: album_art_background_widget
+                      opa: 50%
+                  - artwork_image.release: tv_art_background
+                  - delay: 100ms
                   - artwork_image.set_url:
                       id: tv_art_background
                       url: !lambda 'return id(last_tv_artwork_url);'
@@ -704,6 +710,14 @@ script:
                 id(last_artwork_url) = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
                 id(last_artwork_url) = esphome::artwork_image::cap_artwork_url(id(last_artwork_url), 800);
             - delay: 50ms
+            - lvgl.image.update:
+                id: album_art_background_widget
+                src: album_art_placeholder
+            - lvgl.widget.update:
+                id: album_art_background_widget
+                opa: 50%
+            - artwork_image.release: album_art_background
+            - delay: 100ms
             - artwork_image.set_url:
                 id: album_art_background
                 url: !lambda 'return id(last_artwork_url);'
