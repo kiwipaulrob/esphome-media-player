@@ -64,10 +64,16 @@ jobs:
             chip: ESP32-S3
     steps:
       - uses: actions/checkout@v6
+        with:
+          clean: false
 
-      - name: Ensure full checkout
+      - name: Prepare self-hosted workspace
         run: |
+          sudo rm -rf .esphome output
+          sudo rm -f builds/network_adapter_esp32c6.bin
           git sparse-checkout disable || true
+          git reset --hard HEAD
+          git clean -ffdx -e builds/.esphome/
           git checkout --force HEAD -- .
           test -f "builds/${{ matrix.config }}.factory.yaml"
 
@@ -110,10 +116,12 @@ jobs:
       - name: Fix ESPHome cache permissions
         if: always()
         run: |
-          if [ -d builds/.esphome ]; then
-            sudo chown -R "$USER:$USER" builds/.esphome
-            chmod -R u+rwX builds/.esphome
-          fi
+          for path in .esphome builds/.esphome; do
+            if [ -d "$path" ]; then
+              sudo chown -R "$USER:$USER" "$path"
+              chmod -R u+rwX "$path"
+            fi
+          done
 
       - name: Collect firmware files and generate manifest
         env:
