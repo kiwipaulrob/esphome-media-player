@@ -23,6 +23,8 @@ esp32:
   flash_size: 16MB
   framework:
     type: esp-idf
+    sdkconfig_options:
+      CONFIG_LCD_RGB_RESTART_IN_VSYNC: "y"
 
 
 # -----------------------------------------------------------------------------
@@ -738,7 +740,7 @@ display:
     model: GUITION-4848S040
     id: my_display
     color_order: RGB
-    pclk_frequency: 8MHz
+    pclk_frequency: 6MHz
     update_interval: never
     auto_clear_enabled: False
     transform:
