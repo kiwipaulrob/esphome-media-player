@@ -344,6 +344,12 @@ text_sensor:
 sensor:
   - platform: template
     id: tv_media_duration_sensor
+    on_value:
+      - if:
+          condition:
+            lambda: 'return id(is_tv_mode);'
+          then:
+            - script.execute: refresh_progress_bar_from_state
 
   - platform: template
     id: tv_media_position_sensor
@@ -360,3 +366,4 @@ sensor:
                   auto t = id(ha_time).now();
                   if (t.is_valid()) id(last_tv_position_timestamp) = t.timestamp;
                 }
+            - script.execute: refresh_progress_bar_from_state

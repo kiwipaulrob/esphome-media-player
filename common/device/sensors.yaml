@@ -179,6 +179,43 @@ interval:
                 lv_bar_set_value(id(media_progress_bar), percent, LV_ANIM_OFF);
 
 script:
+  - id: refresh_progress_bar_from_state
+    mode: restart
+    then:
+      - if:
+          condition:
+            lambda: 'return !id(web_settings_active) && !${playback_live_position_enabled} && id(show_progress_bar).state && !id(is_tv_idle);'
+          then:
+            - lambda: |-
+                float pos = id(is_tv_mode) ? id(last_tv_media_position) : id(last_media_position);
+                float dur;
+                if (id(is_tv_mode)) {
+                  dur = id(tv_media_duration_sensor).has_state() ? id(tv_media_duration_sensor).state : 0.0f;
+                } else {
+                  dur = id(media_duration_sensor).has_state() ? id(media_duration_sensor).state : 0.0f;
+                }
+
+                int percent = 0;
+                if (dur > 0.0f) {
+                  percent = (int)((pos / dur) * 100.0f);
+                }
+                if (percent < 0) percent = 0;
+                if (percent > 100) percent = 100;
+
+                if (lv_obj_has_flag(id(media_progress_bar), LV_OBJ_FLAG_HIDDEN)) {
+                  lv_obj_clear_flag(id(media_progress_bar), LV_OBJ_FLAG_HIDDEN);
+                }
+
+                if (id(is_tv_mode)) {
+                  if (percent == id(last_tv_progress_percent)) return;
+                  id(last_tv_progress_percent) = percent;
+                } else {
+                  if (percent == id(last_media_progress_percent)) return;
+                  id(last_media_progress_percent) = percent;
+                }
+
+                lv_bar_set_value(id(media_progress_bar), percent, LV_ANIM_OFF);
+
   # Start the hide timer only (no show). Used when artwork finishes loading or when
   # playback starts. After duration seconds, hides overlay if still playing and visible.
   # mode: restart so re-triggering (e.g. new artwork) restarts the timer.
@@ -454,6 +491,12 @@ text_sensor:
 sensor:
   - platform: template
     id: media_duration_sensor
+    on_value:
+      - if:
+          condition:
+            lambda: 'return !id(is_tv_mode);'
+          then:
+            - script.execute: refresh_progress_bar_from_state
 
   - platform: template
     id: media_position_sensor
@@ -470,6 +513,7 @@ sensor:
                   auto t = id(ha_time).now();
                   if (t.is_valid()) id(last_position_timestamp) = t.timestamp;
                 }
+            - script.execute: refresh_progress_bar_from_state
 
   - platform: template
     id: media_volume_sensor
