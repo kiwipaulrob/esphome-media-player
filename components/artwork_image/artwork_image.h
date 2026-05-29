@@ -111,11 +111,11 @@ class ArtworkImage : public PollingComponent,
 
  protected:
   bool validate_url_(const std::string &url);
-  bool should_use_insecure_local_url_(const std::string &url) const;
+  bool should_use_local_idf_url_(const std::string &url) const;
   bool is_private_or_local_host_(const std::string &host) const;
-  std::shared_ptr<http_request::HttpContainer> get_insecure_(const std::string &url,
-                                                             const std::vector<http_request::Header> &headers,
-                                                             const std::vector<std::string> &collect_headers);
+  std::shared_ptr<http_request::HttpContainer> get_local_idf_(const std::string &url,
+                                                              const std::vector<http_request::Header> &headers);
+  size_t get_sane_content_length_() const;
   ImageFormat detect_format_();
   bool detect_progressive_jpeg_();
   bool detect_heic_();
