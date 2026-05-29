@@ -21,6 +21,7 @@ substitutions:
   artwork_saturation_boost: "0.0f"
   artwork_allow_zoom: "false"
   release_artwork_before_download: "true"
+  playback_refresh_interval: "5s"
   track_info_duration_default: "0"
   pause_lvgl_on_screen_off: "false"
   backlight_dim_transition_length: "0s"

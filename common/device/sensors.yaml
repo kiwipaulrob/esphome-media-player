@@ -45,7 +45,7 @@ globals:
 # Refresh progress bar and elapsed time every second; when playing, estimate
 # position from last HA update + elapsed time so the clock moves smoothly
 interval:
-  - interval: 1s
+  - interval: ${playback_refresh_interval}
     then:
       - lambda: |-
           float dur, pos;
