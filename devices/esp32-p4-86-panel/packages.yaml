@@ -19,6 +19,7 @@ substitutions:
   warm_tone_blue_reduce: "0.28f"
   artwork_contrast_boost: "0.04f"
   artwork_saturation_boost: "0.10f"
+  artwork_allow_zoom: "false"
   release_artwork_before_download: "true"
   # The Waveshare 86 panel's GPIO26 PWM backlight is black below about 70%.
   # Keep 0% as true off, then map 1-100% onto the visible 70-100% range.

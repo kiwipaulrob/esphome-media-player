@@ -96,7 +96,7 @@ script:
           auto *w = id(album_art_background_widget);
           constexpr int display_size = ${artwork_display_size};
           int dim = (iw < ih) ? iw : ih;
-          if (!id(is_tv_mode) && dim > 0 && dim < display_size) {
+          if (!id(is_tv_mode) && ${artwork_allow_zoom} && dim > 0 && dim < display_size) {
             int zoom = (256 * display_size + dim - 1) / dim;
             lv_img_set_zoom(w, zoom);
             lv_img_set_offset_x(w, 0);
