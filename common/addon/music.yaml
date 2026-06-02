@@ -9,6 +9,9 @@ globals:
   - id: artwork_retry_pending
     type: bool
     initial_value: 'false'
+  - id: artwork_retry_attempts
+    type: int
+    initial_value: '0'
   - id: artwork_download_stagger_ms
     type: int
     initial_value: '-1'
@@ -21,6 +24,7 @@ external_components:
 http_request:
   id: http_req
   verify_ssl: ${ha_verify_ssl}
+  timeout: ${artwork_http_timeout}
 
 image:
   # ESPHome resolves local image files from the user's YAML folder, not the package checkout.
@@ -86,7 +90,9 @@ script:
     mode: queued
     then:
       - lvgl.widget.hide: artwork_error_label
-      - lambda: 'id(artwork_retry_pending) = false;'
+      - lambda: |-
+          id(artwork_retry_pending) = false;
+          id(artwork_retry_attempts) = 0;
       - lambda: |-
           auto *img = id(is_tv_mode) ? id(tv_art_background) : id(album_art_background);
           int iw = img->get_width();
@@ -138,21 +144,33 @@ script:
           ESP_LOGW("artwork", "Artwork download failed: %s", url.c_str());
       - if:
           condition:
-            lambda: 'return !id(artwork_retry_pending);'
+            lambda: |-
+              const std::string &url = id(is_tv_mode) ? id(last_tv_artwork_url) : id(last_artwork_url);
+              return !url.empty() && id(artwork_retry_attempts) < 5;
           then:
-            - lambda: 'id(artwork_retry_pending) = true;'
+            - lambda: |-
+                id(artwork_retry_pending) = true;
+                id(artwork_retry_attempts) += 1;
             - script.execute: ensure_artwork_download_stagger
             - script.wait: ensure_artwork_download_stagger
-            - delay: !lambda 'return static_cast<uint32_t>(1000 + id(artwork_download_stagger_ms));'
+            - delay: !lambda |-
+                const int attempt = id(artwork_retry_attempts);
+                uint32_t backoff_ms = 1000;
+                if (attempt == 2) backoff_ms = 3000;
+                else if (attempt == 3) backoff_ms = 8000;
+                else if (attempt == 4) backoff_ms = 15000;
+                else if (attempt >= 5) backoff_ms = 30000;
+                return static_cast<uint32_t>(backoff_ms + id(artwork_download_stagger_ms));
             - lambda: |-
                 auto *img = id(is_tv_mode) ? id(tv_art_background) : id(album_art_background);
                 const std::string &url = id(is_tv_mode) ? id(last_tv_artwork_url) : id(last_artwork_url);
                 if (!url.empty()) {
-                  ESP_LOGI("artwork", "Retrying artwork download: %s", url.c_str());
+                  ESP_LOGI("artwork", "Retrying artwork download attempt %d/5: %s",
+                           id(artwork_retry_attempts), url.c_str());
                   img->set_url(url);
                   img->update();
                 }
           else:
             - lambda: |-
                 id(artwork_retry_pending) = false;
-                ESP_LOGW("artwork", "Retry also failed; keeping current artwork visible");
+                ESP_LOGW("artwork", "Artwork retries exhausted; keeping current artwork visible");

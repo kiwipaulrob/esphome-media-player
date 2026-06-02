@@ -114,6 +114,9 @@ text_sensor:
                       id: album_art_background_widget
                       opa: 50%
                   - lvgl.widget.hide: artwork_error_label
+                  - lambda: |-
+                      id(artwork_retry_pending) = false;
+                      id(artwork_retry_attempts) = 0;
                   - script.execute: ensure_artwork_download_stagger
                   - script.wait: ensure_artwork_download_stagger
                   - delay: !lambda 'return static_cast<uint32_t>(50 + id(artwork_download_stagger_ms));'
@@ -265,6 +268,8 @@ text_sensor:
                                   while (!path.empty() && (path.back() == '\n' || path.back() == '\r' || path.back() == ' ')) path.pop_back();
                                   id(last_tv_artwork_url) = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
                                   id(last_tv_artwork_url) = esphome::artwork_image::cap_artwork_url(id(last_tv_artwork_url), ${artwork_size});
+                                  id(artwork_retry_pending) = false;
+                                  id(artwork_retry_attempts) = 0;
                               - lvgl.widget.update:
                                   id: album_art_background_widget
                                   opa: 50%

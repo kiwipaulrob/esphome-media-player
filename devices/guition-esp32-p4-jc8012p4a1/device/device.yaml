@@ -635,6 +635,8 @@ script:
                       while (!path.empty() && (path.back() == '\n' || path.back() == '\r' || path.back() == ' ')) path.pop_back();
                       id(last_tv_artwork_url) = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
                       id(last_tv_artwork_url) = esphome::artwork_image::cap_artwork_url(id(last_tv_artwork_url), 800);
+                      id(artwork_retry_pending) = false;
+                      id(artwork_retry_attempts) = 0;
                   - delay: 50ms
                   - lvgl.image.update:
                       id: album_art_background_widget
@@ -715,6 +717,8 @@ script:
                 while (!path.empty() && (path.back() == '\n' || path.back() == '\r' || path.back() == ' ')) path.pop_back();
                 id(last_artwork_url) = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
                 id(last_artwork_url) = esphome::artwork_image::cap_artwork_url(id(last_artwork_url), 800);
+                id(artwork_retry_pending) = false;
+                id(artwork_retry_attempts) = 0;
             - delay: 50ms
             - lvgl.image.update:
                 id: album_art_background_widget
