@@ -15,7 +15,7 @@ static const uint8_t DELAY_FLAG = 0xFF;
 
 // Maximum bytes to log for init commands (truncated if larger)
 static constexpr size_t MIPI_RGB_MAX_CMD_LOG_BYTES = 64;
-static constexpr uint8_t RGB_BOUNCE_BUFFER_ROWS = 40;
+static constexpr uint8_t RGB_BOUNCE_BUFFER_ROWS = 20;
 static constexpr uint8_t MADCTL_MY = 0x80;     // Bit 7 Bottom to top
 static constexpr uint8_t MADCTL_MX = 0x40;     // Bit 6 Right to left
 static constexpr uint8_t MADCTL_MV = 0x20;     // Bit 5 Swap axes
