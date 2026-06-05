@@ -6,10 +6,8 @@
 # =============================================================================
 
 lvgl:
-  buffer_size: 12%
-  # P4 software rotation uses the PPA/DMA path. Keep rotated draw chunks on a
-  # cache-line-friendly RGB565 boundary instead of LVGL's 2-pixel default.
-  draw_rounding: 32
+  buffer_size: 100%
+  displays: my_display
   byte_order: little_endian
   rotation: ${display_rotation}
   on_boot:
