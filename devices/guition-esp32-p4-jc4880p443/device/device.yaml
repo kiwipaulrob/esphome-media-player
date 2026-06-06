@@ -525,7 +525,7 @@ script:
             lv_obj_set_pos(id(accent_overlay), 0, 480);
             lv_obj_set_size(id(accent_overlay), 480, 320);
             lv_obj_set_pos(id(track_info_text), 24, 514);
-            lv_obj_set_size(id(track_info_text), 432, 262);
+            lv_obj_set_size(id(track_info_text), 324, 262);
             lv_obj_set_style_max_height(id(media_title_label), 130, 0);
             lv_obj_set_width(id(media_progress_bar), 480);
             lv_obj_set_size(id(settings_panel), 480, 800);
