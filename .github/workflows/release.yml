@@ -23,7 +23,7 @@ jobs:
     if: github.event_name == 'release'
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -66,7 +66,7 @@ jobs:
             config: guition-esp32-s3-4848s040
             chip: ESP32-S3
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           clean: false
 
@@ -197,7 +197,7 @@ jobs:
     needs: [release-notes, build-firmware]
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           sparse-checkout: scripts/firmware_release.py
           sparse-checkout-cone-mode: false

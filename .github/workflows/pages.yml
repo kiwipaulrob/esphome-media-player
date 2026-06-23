@@ -35,7 +35,7 @@ jobs:
       github.event.workflow_run.event == 'release')
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Ensure full checkout
         run: |
@@ -68,7 +68,7 @@ jobs:
       release_tag: ${{ steps.release-meta.outputs.release_tag }}
       device_slugs: ${{ steps.release-meta.outputs.device_slugs }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           sparse-checkout: scripts/firmware_release.py
           sparse-checkout-cone-mode: false
@@ -127,7 +127,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           sparse-checkout: scripts/firmware_release.py
           sparse-checkout-cone-mode: false
