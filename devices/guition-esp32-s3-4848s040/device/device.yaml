@@ -746,10 +746,9 @@ display:
     model: GUITION-4848S040
     id: my_display
     color_order: RGB
-    # 12 MHz is the panel vendor default and keeps the RGB refresh high enough
-    # to avoid visible shimmer. Lower clocks give more DMA margin, but can make
-    # the display look like it is pulsing, especially on static screens.
-    pclk_frequency: 12MHz
+    # 16 MHz puts the panel refresh near 60 Hz with these timings, which avoids
+    # the subtle low-refresh shimmer visible at 6-12 MHz on some panels.
+    pclk_frequency: 16MHz
     update_interval: never
     auto_clear_enabled: False
     transform:
