@@ -191,7 +191,7 @@ lvgl:
             align: bottom_mid
             y: 0
             width: 720
-            height: 8
+            height: 4
             bg_color: 0x000000
             bg_opa: 50%
             radius: 0
