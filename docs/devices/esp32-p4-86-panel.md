@@ -19,6 +19,10 @@ Click **Install** to flash the firmware directly from your browser. No ESPHome d
 If you prefer to install via the ESPHome dashboard, see [ESPHome Config](/advanced/esphome-config) (this device uses the `devices/esp32-p4-86-panel` package).
 :::
 
+## Rotation
+
+Use **Screen Rotation** in the device web settings page to rotate the display and touch input together. The supported values are `0`, `90`, `180`, and `270`.
+
 ## Where to Buy
 
 - **Panel:** [Waveshare](https://www.waveshare.com/esp32-p4-wifi6-touch-lcd-4b.htm)

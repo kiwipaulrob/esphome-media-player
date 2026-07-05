@@ -5,7 +5,7 @@ description: Rotate supported ESPHome Media Player touchscreen displays and touc
 
 # Display Rotation
 
-Supported devices can rotate the display for different mounting orientations (for example to change which side the power cable exits from). Set `display_rotation` to rotate both the screen and touch input.
+Supported devices can rotate the display for different mounting orientations (for example to change which side the power cable exits from). Set `display_rotation` in YAML, or use **Screen Rotation** from the device web settings page on supported firmware, to rotate both the screen and touch input.
 
 ::: warning
 ESPHome 2026.4 and newer handle rotation through LVGL (`lvgl.rotation`), including touch input. Older examples that set `touch_swap_xy`, `touch_mirror_x`, or `touch_mirror_y` are no longer needed.
@@ -21,6 +21,8 @@ The 480×480 square display supports all four rotations.
 | `"90"`              |
 | `"180"`             |
 | `"270"`             |
+
+The device also exposes **Screen Rotation** in the web settings page and Home Assistant.
 
 ### Example: 90-degree rotation
 
@@ -72,6 +74,8 @@ The 720x720 square display supports the same four rotations as the S3 square dis
 | `"90"` |
 | `"180"` |
 | `"270"` |
+
+The device also exposes **Screen Rotation** in the web settings page.
 
 Example:
 

@@ -105,7 +105,7 @@ Shifts album art toward warmer colors for a more comfortable viewing experience,
 | **Day Screen Warmth** | Warmth applied to album art during the day. 0% = no tint, 100% = maximum warmth. Default: 30%. |
 | **Night Screen Warmth** | Warmth applied to album art at night. 0% = no tint, 100% = maximum warmth. Default: 60%. |
 
-## Rotation <Badge type="info" text="supported P4 panels" />
+## Rotation <Badge type="info" text="supported panels" />
 
 | Setting | Description |
 |---------|-------------|

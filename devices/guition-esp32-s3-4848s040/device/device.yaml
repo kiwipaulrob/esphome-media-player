@@ -119,6 +119,35 @@ api:
 
 
 # -----------------------------------------------------------------------------
+# SCREEN ROTATION SELECT
+# -----------------------------------------------------------------------------
+# Exposes native LVGL display rotation to Home Assistant and the web settings UI.
+# LVGL handles the screen transform and touch input rotation together.
+# -----------------------------------------------------------------------------
+select:
+  - platform: template
+    name: "Screen Rotation"
+    id: screen_rotation_select
+    icon: "mdi:screen-rotation"
+    entity_category: config
+    internal: ${ha_config_internal}
+    optimistic: true
+    restore_value: true
+    initial_option: "${display_rotation}"
+    options:
+      - "0"
+      - "90"
+      - "180"
+      - "270"
+    on_value:
+      - if:
+          condition:
+            lambda: 'return id(lvgl_ready);'
+          then:
+            - script.execute: apply_screen_rotation
+
+
+# -----------------------------------------------------------------------------
 # LOGGING
 # -----------------------------------------------------------------------------
 # Outputs debug messages for troubleshooting.
@@ -254,6 +283,9 @@ globals:
     type: bool
     restore_value: true
     initial_value: 'false'
+  - id: lvgl_ready
+    type: bool
+    initial_value: 'false'
 
 
 
@@ -311,8 +343,8 @@ touchscreen:
           int view_dx = view_x_end - view_x_start;
           int view_dy = view_y_end - view_y_start;
 
-          ESP_LOGD("touch", "Swipe raw=(%d,%d) view=(%d,%d) rotation=${display_rotation} start=(%d,%d) end=(%d,%d)",
-                   dx, dy, view_dx, view_dy, id(touch_x_start), id(touch_y_start),
+          ESP_LOGD("touch", "Swipe raw=(%d,%d) view=(%d,%d) rotation=%s start=(%d,%d) end=(%d,%d)",
+                   dx, dy, view_dx, view_dy, id(screen_rotation_select).current_option().c_str(), id(touch_x_start), id(touch_y_start),
                    id(touch_x_end), id(touch_y_end));
 
           // --- Dismiss actions prompt on tap ---
@@ -422,6 +454,31 @@ touchscreen:
 # mode: restart – cancels the in-progress run and starts fresh
 # -----------------------------------------------------------------------------
 script:
+  # -- Apply Home Assistant/web settings screen rotation using native LVGL rotation --
+  - id: apply_screen_rotation
+    mode: restart
+    then:
+      - if:
+          condition:
+            lambda: 'return id(screen_rotation_select).current_option() == "0";'
+          then:
+            - lvgl.display.set_rotation: 0
+      - if:
+          condition:
+            lambda: 'return id(screen_rotation_select).current_option() == "90";'
+          then:
+            - lvgl.display.set_rotation: 90
+      - if:
+          condition:
+            lambda: 'return id(screen_rotation_select).current_option() == "180";'
+          then:
+            - lvgl.display.set_rotation: 180
+      - if:
+          condition:
+            lambda: 'return id(screen_rotation_select).current_option() == "270";'
+          then:
+            - lvgl.display.set_rotation: 270
+
   # -- Toggle now-playing overlay (fade in / fade out) --
   - id: toggle_ui
     mode: restart
