@@ -10,7 +10,6 @@ workflows.
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass
 import hashlib
 import json
 import re
@@ -21,6 +20,8 @@ import urllib.request
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.parse import urljoin
+
+from product_model import Device, default_asset_slugs, device_by_slug, load_devices
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -33,56 +34,9 @@ FIRMWARE_VERSION_PLACEHOLDER = '  firmware_version: "0.0.0"'
 PLACEHOLDER_STRINGS = {"dev", "main", "0.0.0"}
 
 
-@dataclass(frozen=True)
-class Device:
-    asset_slug: str
-    web_slug: str
-    config: str
-    chip: str
-
-    @property
-    def factory_yaml(self) -> Path:
-        return ROOT / "builds" / f"{self.config}.factory.yaml"
-
-
-DEVICES = (
-    Device(
-        asset_slug="media-player-jc8012p4a1",
-        web_slug="jc8012p4a1",
-        config="guition-esp32-p4-jc8012p4a1",
-        chip="ESP32-P4",
-    ),
-    Device(
-        asset_slug="media-player-jc1060p470",
-        web_slug="jc1060p470",
-        config="guition-esp32-p4-jc1060p470",
-        chip="ESP32-P4",
-    ),
-    Device(
-        asset_slug="media-player-jc4880p443",
-        web_slug="jc4880p443",
-        config="guition-esp32-p4-jc4880p443",
-        chip="ESP32-P4",
-    ),
-    Device(
-        asset_slug="media-player-p4-86-panel",
-        web_slug="p4-86-panel",
-        config="esp32-p4-86-panel",
-        chip="ESP32-P4",
-    ),
-    Device(
-        asset_slug="media-player-4848s040",
-        web_slug="4848s040",
-        config="guition-esp32-s3-4848s040",
-        chip="ESP32-S3",
-    ),
-)
-DEVICE_BY_SLUG = {
-    value: device
-    for device in DEVICES
-    for value in (device.asset_slug, device.web_slug, device.config)
-}
-DEFAULT_ASSET_SLUGS = [device.asset_slug for device in DEVICES]
+DEVICES = load_devices()
+DEVICE_BY_SLUG = device_by_slug()
+DEFAULT_ASSET_SLUGS = default_asset_slugs()
 
 
 class FirmwareReleaseError(RuntimeError):

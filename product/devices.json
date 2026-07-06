@@ -1,0 +1,129 @@
+{
+  "devices": [
+    {
+      "profile": "guition-esp32-p4-jc8012p4a1",
+      "asset_slug": "media-player-jc8012p4a1",
+      "web_slug": "jc8012p4a1",
+      "config": "guition-esp32-p4-jc8012p4a1",
+      "chip": "ESP32-P4",
+      "package_path": "devices/guition-esp32-p4-jc8012p4a1/packages.yaml",
+      "docs_path": "/devices/esp32-p4-jc8012p4a1",
+      "display": {
+        "name": "Guition ESP32-P4 JC8012P4A1",
+        "label": "JC8012P4A1",
+        "size": "10.1 in",
+        "width": 1280,
+        "height": 800,
+        "default_rotation": "90",
+        "layout": "landscape-side-panel",
+        "shape": "landscape"
+      },
+      "installer": {
+        "order": 1,
+        "slots": 20,
+        "cols": 5,
+        "rows": 4
+      }
+    },
+    {
+      "profile": "guition-esp32-p4-jc1060p470",
+      "asset_slug": "media-player-jc1060p470",
+      "web_slug": "jc1060p470",
+      "config": "guition-esp32-p4-jc1060p470",
+      "chip": "ESP32-P4",
+      "package_path": "devices/guition-esp32-p4-jc1060p470/packages.yaml",
+      "docs_path": "/devices/esp32-p4-jc1060p470",
+      "display": {
+        "name": "Guition ESP32-P4 JC1060P470",
+        "label": "JC1060P470",
+        "size": "7 in",
+        "width": 1024,
+        "height": 600,
+        "default_rotation": "0",
+        "layout": "landscape-side-panel",
+        "shape": "landscape"
+      },
+      "installer": {
+        "order": 2,
+        "slots": 15,
+        "cols": 5,
+        "rows": 3
+      }
+    },
+    {
+      "profile": "guition-esp32-p4-jc4880p443",
+      "asset_slug": "media-player-jc4880p443",
+      "web_slug": "jc4880p443",
+      "config": "guition-esp32-p4-jc4880p443",
+      "chip": "ESP32-P4",
+      "package_path": "devices/guition-esp32-p4-jc4880p443/packages-90.yaml",
+      "docs_path": "/devices/esp32-p4-jc4880p443",
+      "display": {
+        "name": "Guition ESP32-P4 JC4880P443",
+        "label": "JC4880P443",
+        "size": "4.3 in",
+        "width": 480,
+        "height": 800,
+        "default_rotation": "90",
+        "layout": "landscape-side-panel",
+        "shape": "portrait"
+      },
+      "installer": {
+        "order": 4,
+        "slots": 6,
+        "cols": 2,
+        "rows": 3
+      }
+    },
+    {
+      "profile": "esp32-p4-86-panel",
+      "asset_slug": "media-player-p4-86-panel",
+      "web_slug": "p4-86-panel",
+      "config": "esp32-p4-86-panel",
+      "chip": "ESP32-P4",
+      "package_path": "devices/esp32-p4-86-panel/packages.yaml",
+      "docs_path": "/devices/esp32-p4-86-panel",
+      "display": {
+        "name": "ESP32-P4 86 Panel",
+        "label": "P4 86 Panel",
+        "size": "4 in",
+        "width": 720,
+        "height": 720,
+        "default_rotation": "0",
+        "layout": "square",
+        "shape": "square"
+      },
+      "installer": {
+        "order": 3,
+        "slots": 9,
+        "cols": 3,
+        "rows": 3
+      }
+    },
+    {
+      "profile": "guition-esp32-s3-4848s040",
+      "asset_slug": "media-player-4848s040",
+      "web_slug": "4848s040",
+      "config": "guition-esp32-s3-4848s040",
+      "chip": "ESP32-S3",
+      "package_path": "devices/guition-esp32-s3-4848s040/packages.yaml",
+      "docs_path": "/devices/esp32-s3-4848s040",
+      "display": {
+        "name": "Guition ESP32-S3 4848S040",
+        "label": "4848S040",
+        "size": "4 in",
+        "width": 480,
+        "height": 480,
+        "default_rotation": "0",
+        "layout": "square",
+        "shape": "square"
+      },
+      "installer": {
+        "order": 5,
+        "slots": 9,
+        "cols": 3,
+        "rows": 3
+      }
+    }
+  ]
+}

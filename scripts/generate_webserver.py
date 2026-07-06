@@ -9,6 +9,13 @@ import json
 from pathlib import Path
 import sys
 
+from product_model import (
+    firmware_manifest_slugs,
+    web_settings_entities,
+    web_settings_number_limits,
+    web_settings_state,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT / "docs" / "webserver" / "src"
@@ -17,10 +24,23 @@ TEMPLATE_PATH = SRC_DIR / "app.template.js"
 OUT_PATH = ROOT / "docs" / "public" / "webserver" / "app.js"
 
 
+def js_literal(value: object) -> str:
+    return json.dumps(value, separators=(",", ":"))
+
+
 def build_bundle() -> str:
     css = STYLE_PATH.read_text().rstrip("\n")
     template = TEMPLATE_PATH.read_text()
-    return template.replace("__MEDIA_PLAYER_CSS__", json.dumps(css, separators=(",", ":")))
+    replacements = {
+        "__MEDIA_PLAYER_CSS__": js_literal(css),
+        "__FIRMWARE_MANIFEST_SLUGS__": js_literal(firmware_manifest_slugs()),
+        "__WEB_SETTINGS_STATE__": js_literal(web_settings_state()),
+        "__WEB_SETTINGS_ENTITIES__": js_literal(web_settings_entities()),
+        "__WEB_SETTINGS_NUMBER_LIMITS__": js_literal(web_settings_number_limits()),
+    }
+    for placeholder, value in replacements.items():
+        template = template.replace(placeholder, value)
+    return template
 
 
 def write_or_check(path: Path, content: str, check: bool) -> bool:

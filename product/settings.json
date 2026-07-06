@@ -1,0 +1,228 @@
+{
+  "settings": [
+    {
+      "key": "media_player",
+      "default": "",
+      "entity": { "domain": "text", "name": "Media Player" }
+    },
+    {
+      "key": "linked_media_player",
+      "default": "",
+      "entity": { "domain": "text", "name": "Linked Media Player" }
+    },
+    {
+      "key": "day_night_sensor",
+      "default": "",
+      "entity": { "domain": "text", "name": "Day-Night Sensor" }
+    },
+    {
+      "key": "show_remaining_time",
+      "default": true,
+      "entity": { "domain": "switch", "name": "Playback: Show Remaining Time", "bool": true }
+    },
+    {
+      "key": "show_progress_bar",
+      "default": true,
+      "entity": { "domain": "switch", "name": "Playback: Show Progress Bar", "bool": true }
+    },
+    {
+      "key": "auto_show_track_info",
+      "default": true,
+      "entity": { "domain": "switch", "name": "Playback: Auto-Show Track Info", "bool": true }
+    },
+    {
+      "key": "track_info_duration",
+      "default": 5,
+      "entity": { "domain": "number", "name": "Playback: Track Info Duration", "number": true },
+      "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" }
+    },
+    {
+      "key": "speaker_panel_timeout",
+      "default": 10,
+      "entity": { "domain": "number", "name": "Speakers: Auto-Close Timeout", "number": true },
+      "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" }
+    },
+    {
+      "key": "day_active_brightness",
+      "default": 100,
+      "entity": { "domain": "number", "name": "Day: Active Brightness", "number": true },
+      "limits": { "min": 5, "max": 100, "step": 5, "suffix": "%" }
+    },
+    {
+      "key": "night_active_brightness",
+      "default": 80,
+      "entity": { "domain": "number", "name": "Night: Active Brightness", "number": true },
+      "limits": { "min": 5, "max": 100, "step": 5, "suffix": "%" }
+    },
+    {
+      "key": "day_dim_brightness",
+      "default": 35,
+      "entity": { "domain": "number", "name": "Day: Dim Brightness", "number": true },
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+    },
+    {
+      "key": "night_dim_brightness",
+      "default": 25,
+      "entity": { "domain": "number", "name": "Night: Dim Brightness", "number": true },
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+    },
+    {
+      "key": "paused_dimming_enabled",
+      "default": true,
+      "entity": { "domain": "switch", "name": "Screen Saver: Dim When Paused", "bool": true }
+    },
+    {
+      "key": "dim_timeout",
+      "default": 60,
+      "entity": { "domain": "number", "name": "Screen Saver: Paused Dimming", "number": true },
+      "limits": { "min": 1, "max": 600, "step": 1, "suffix": "s" }
+    },
+    {
+      "key": "screen_saver_enabled",
+      "default": true,
+      "entity": { "domain": "switch", "name": "Screen Saver: Enabled", "bool": true }
+    },
+    {
+      "key": "screen_saver_timeout",
+      "default": 300,
+      "entity": { "domain": "number", "name": "Screen Saver: Timer", "number": true },
+      "limits": { "min": 1, "max": 1800, "step": 1, "suffix": "s" }
+    },
+    {
+      "key": "day_clock_brightness",
+      "default": 35,
+      "entity": { "domain": "number", "name": "Screen Saver: Clock Brightness", "number": true },
+      "limits": { "min": 1, "max": 100, "step": 1, "suffix": "%" }
+    },
+    {
+      "key": "evening_clock_brightness",
+      "default": 35,
+      "entity": { "domain": "number", "name": "Screen Saver: Evening Clock Brightness", "number": true },
+      "limits": { "min": 1, "max": 100, "step": 1, "suffix": "%" }
+    },
+    {
+      "key": "day_idle_action",
+      "default": "Clock",
+      "entity": { "domain": "select", "name": "Screen: Day Idle Action", "optionsKey": "idle_action_options" }
+    },
+    {
+      "key": "night_idle_action",
+      "default": "Clock",
+      "entity": { "domain": "select", "name": "Screen: Night Idle Action", "optionsKey": "idle_action_options" }
+    },
+    {
+      "key": "schedule_enabled",
+      "default": false,
+      "entity": { "domain": "switch", "name": "Screen: Schedule Enabled", "bool": true }
+    },
+    {
+      "key": "schedule_on_hour",
+      "default": 6,
+      "entity": { "domain": "number", "name": "Screen: Schedule On Hour", "number": true },
+      "limits": { "min": 0, "max": 23, "step": 1, "suffix": "h" }
+    },
+    {
+      "key": "schedule_off_hour",
+      "default": 20,
+      "entity": { "domain": "number", "name": "Screen: Schedule Off Hour", "number": true },
+      "limits": { "min": 0, "max": 23, "step": 1, "suffix": "h" }
+    },
+    {
+      "key": "schedule_wake_timeout",
+      "default": 60,
+      "entity": { "domain": "number", "name": "Screen: Schedule Wake Timeout", "number": true },
+      "limits": { "min": 10, "max": 3600, "step": 10, "suffix": "s" }
+    },
+    {
+      "key": "screen_warmth_day",
+      "default": 30,
+      "entity": { "domain": "number", "name": "Day: Screen Warmth", "number": true },
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+    },
+    {
+      "key": "screen_warmth_night",
+      "default": 60,
+      "entity": { "domain": "number", "name": "Night: Screen Warmth", "number": true },
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+    },
+    {
+      "key": "clock_time_format",
+      "default": "24 Hour",
+      "entity": { "domain": "select", "name": "Clock: Time Format", "optionsKey": "clock_time_format_options" }
+    },
+    {
+      "key": "clock_timezone",
+      "default": "UTC (GMT+0)",
+      "entity": { "domain": "select", "name": "Screen: Timezone", "optionsKey": "clock_timezone_options" }
+    },
+    {
+      "key": "screen_rotation",
+      "default": "0",
+      "entity": { "domain": "select", "name": "Screen Rotation", "optionsKey": "screen_rotation_options" }
+    },
+    {
+      "key": "auto_update",
+      "default": true,
+      "entity": { "domain": "switch", "name": "Firmware: Auto Update", "bool": true }
+    },
+    {
+      "key": "update_frequency",
+      "default": "Daily",
+      "entity": { "domain": "select", "name": "Firmware: Update Frequency", "optionsKey": "update_frequency_options" }
+    },
+    {
+      "key": "firmware_version",
+      "entity": {
+        "domain": "text_sensor",
+        "name": "Firmware: Version",
+        "firmwareVersion": true,
+        "fetchNames": ["firmware__version", "firmware_version", "firmware_version_sensor"]
+      }
+    },
+    {
+      "key": "firmware_update",
+      "entity": { "domain": "update", "name": "Firmware: Update", "update": true }
+    },
+    {
+      "key": "check_latest",
+      "entity": { "domain": "button", "name": "Firmware: Check for Update", "skipFetch": true }
+    },
+    {
+      "key": "developer_experimental_features",
+      "default": false,
+      "entity": { "domain": "switch", "name": "Developer: Experimental Features", "bool": true }
+    },
+    {
+      "key": "device_profile",
+      "default": "",
+      "entity": { "domain": "text_sensor", "name": "Device Profile" }
+    },
+    {
+      "key": "online",
+      "default": false,
+      "entity": { "domain": "binary_sensor", "name": "Online", "bool": true }
+    },
+    {
+      "key": "wifi_strength",
+      "default": null,
+      "entity": { "domain": "sensor", "name": "Wifi Strength", "number": true }
+    },
+    {
+      "key": "ip_address",
+      "default": "",
+      "entity": { "domain": "text_sensor", "name": "IP Address" }
+    }
+  ],
+  "browser_state": {
+    "clock_time_format_options": ["24 Hour", "12 Hour"],
+    "clock_timezone_options": ["UTC (GMT+0)"],
+    "screen_rotation_options": ["0", "90", "180", "270"],
+    "update_frequency_options": ["Hourly", "Daily", "Weekly"],
+    "firmware_state": "",
+    "installed_version": "",
+    "latest_version": "",
+    "firmware_release_url": "",
+    "firmware_checking": false,
+    "update_available": false
+  }
+}

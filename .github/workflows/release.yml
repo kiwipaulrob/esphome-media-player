@@ -199,7 +199,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          sparse-checkout: scripts/firmware_release.py
+          sparse-checkout: |
+            scripts/firmware_release.py
+            scripts/product_model.py
+            product/devices.json
           sparse-checkout-cone-mode: false
 
       - name: Set release metadata
