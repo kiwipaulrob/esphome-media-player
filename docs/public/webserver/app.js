@@ -28,134 +28,18 @@
   document.head.appendChild(favicon);
 
   var DEFAULT_SPEAKER_PANEL_TIMEOUT = 10;
-  var SPEAKER_PANEL_TIMEOUT_OPTIONS = [5, 10, 20, 30, 60];
-  var TRACK_INFO_DURATION_OPTIONS = [0, 3, 5, 10, 15, 20, 30, 60];
-  var S3_DEVICE_PROFILE = "guition-esp32-s3-4848s040";
+  var SETTING_OPTIONS = {"track_info_duration":[0,3,5,10,15,20,30,60],"speaker_panel_timeout":[5,10,20,30,60]};
+  var SPEAKER_PANEL_TIMEOUT_OPTIONS = SETTING_OPTIONS.speaker_panel_timeout;
+  var TRACK_INFO_DURATION_OPTIONS = SETTING_OPTIONS.track_info_duration;
+  var WEB_DEVICE_PROFILES = {"esp32_s3":["guition-esp32-s3-4848s040"],"screen_rotation":["guition-esp32-p4-jc8012p4a1","guition-esp32-p4-jc1060p470","guition-esp32-p4-jc4880p443","esp32-p4-86-panel","guition-esp32-s3-4848s040"],"track_info_duration":["esp32-p4-86-panel","guition-esp32-s3-4848s040"]};
   var WEB_ACTIVITY_HEARTBEAT_MS = 10000;
   var FIRMWARE_INSTALL_REFRESH_MS = 5000;
   var FIRMWARE_INSTALL_REFRESH_TIMEOUT_MS = 300000;
   var FIRMWARE_PUBLIC_MANIFEST_BASE = "https://jtenniswood.github.io/esphome-media-player/firmware/";
-  var FIRMWARE_MANIFEST_SLUGS = {
-    "esp32-p4-86-panel": "p4-86-panel",
-    "guition-esp32-p4-jc1060p470": "jc1060p470",
-    "guition-esp32-p4-jc4880p443": "jc4880p443",
-    "guition-esp32-p4-jc8012p4a1": "jc8012p4a1",
-    "guition-esp32-s3-4848s040": "4848s040"
-  };
-
-  var S = {
-    media_player: "",
-    linked_media_player: "",
-    day_night_sensor: "",
-    show_remaining_time: true,
-    show_progress_bar: true,
-    auto_show_track_info: true,
-    track_info_duration: 5,
-    speaker_panel_timeout: DEFAULT_SPEAKER_PANEL_TIMEOUT,
-    day_active_brightness: 100,
-    night_active_brightness: 80,
-    day_dim_brightness: 35,
-    night_dim_brightness: 25,
-    paused_dimming_enabled: true,
-    dim_timeout: 60,
-    screen_saver_enabled: true,
-    screen_saver_timeout: 300,
-    day_clock_brightness: 35,
-    evening_clock_brightness: 35,
-    day_idle_action: "Clock",
-    night_idle_action: "Clock",
-    schedule_enabled: false,
-    schedule_on_hour: 6,
-    schedule_off_hour: 20,
-    schedule_wake_timeout: 60,
-    screen_warmth_day: 30,
-    screen_warmth_night: 60,
-    clock_time_format: "24 Hour",
-    clock_time_format_options: ["24 Hour", "12 Hour"],
-    clock_timezone: "Home Assistant (automatic)",
-    clock_timezone_options: ["Home Assistant (automatic)"],
-    screen_rotation: "0",
-    screen_rotation_options: ["0", "90", "180", "270"],
-    auto_update: true,
-    update_frequency: "Daily",
-    update_frequency_options: ["Hourly", "Daily", "Weekly"],
-    firmware_state: "",
-    installed_version: "",
-    latest_version: "",
-    firmware_release_url: "",
-    firmware_checking: false,
-    update_available: false,
-    developer_experimental_features: false,
-    device_profile: "",
-    online: false,
-    wifi_strength: null,
-    ip_address: ""
-  };
-
-  var ENTITIES = {
-    media_player: { domain: "text", name: "Media Player" },
-    linked_media_player: { domain: "text", name: "Linked Media Player" },
-    day_night_sensor: { domain: "text", name: "Day-Night Sensor" },
-    show_remaining_time: { domain: "switch", name: "Playback: Show Remaining Time", bool: true },
-    show_progress_bar: { domain: "switch", name: "Playback: Show Progress Bar", bool: true },
-    auto_show_track_info: { domain: "switch", name: "Playback: Auto-Show Track Info", bool: true },
-    track_info_duration: { domain: "number", name: "Playback: Track Info Duration", number: true },
-    speaker_panel_timeout: { domain: "number", name: "Speakers: Auto-Close Timeout", number: true },
-    day_active_brightness: { domain: "number", name: "Day: Active Brightness", number: true },
-    night_active_brightness: { domain: "number", name: "Night: Active Brightness", number: true },
-    day_dim_brightness: { domain: "number", name: "Day: Dim Brightness", number: true },
-    night_dim_brightness: { domain: "number", name: "Night: Dim Brightness", number: true },
-    paused_dimming_enabled: { domain: "switch", name: "Screen Saver: Dim When Paused", bool: true },
-    dim_timeout: { domain: "number", name: "Screen Saver: Paused Dimming", number: true },
-    screen_saver_enabled: { domain: "switch", name: "Screen Saver: Enabled", bool: true },
-    screen_saver_timeout: { domain: "number", name: "Screen Saver: Timer", number: true },
-    day_clock_brightness: { domain: "number", name: "Screen Saver: Clock Brightness", number: true },
-    evening_clock_brightness: { domain: "number", name: "Screen Saver: Evening Clock Brightness", number: true },
-    day_idle_action: { domain: "select", name: "Screen: Day Idle Action", optionsKey: "idle_action_options" },
-    night_idle_action: { domain: "select", name: "Screen: Night Idle Action", optionsKey: "idle_action_options" },
-    schedule_enabled: { domain: "switch", name: "Screen: Schedule Enabled", bool: true },
-    schedule_on_hour: { domain: "number", name: "Screen: Schedule On Hour", number: true },
-    schedule_off_hour: { domain: "number", name: "Screen: Schedule Off Hour", number: true },
-    schedule_wake_timeout: { domain: "number", name: "Screen: Schedule Wake Timeout", number: true },
-    screen_warmth_day: { domain: "number", name: "Day: Screen Warmth", number: true },
-    screen_warmth_night: { domain: "number", name: "Night: Screen Warmth", number: true },
-    clock_time_format: { domain: "select", name: "Clock: Time Format", optionsKey: "clock_time_format_options" },
-    clock_timezone: { domain: "select", name: "Screen: Timezone", optionsKey: "clock_timezone_options" },
-    screen_rotation: { domain: "select", name: "Screen Rotation", optionsKey: "screen_rotation_options" },
-    auto_update: { domain: "switch", name: "Firmware: Auto Update", bool: true },
-    update_frequency: { domain: "select", name: "Firmware: Update Frequency", optionsKey: "update_frequency_options" },
-    firmware_version: {
-      domain: "text_sensor",
-      name: "Firmware: Version",
-      firmwareVersion: true,
-      fetchNames: ["firmware__version", "firmware_version", "firmware_version_sensor"]
-    },
-    firmware_update: { domain: "update", name: "Firmware: Update", update: true },
-    check_latest: { domain: "button", name: "Firmware: Check for Update", skipFetch: true },
-    developer_experimental_features: { domain: "switch", name: "Developer: Experimental Features", bool: true },
-    device_profile: { domain: "text_sensor", name: "Device Profile" },
-    online: { domain: "binary_sensor", name: "Online", bool: true },
-    wifi_strength: { domain: "sensor", name: "Wifi Strength", number: true },
-    ip_address: { domain: "text_sensor", name: "IP Address" }
-  };
-
-  var NUMBER_LIMITS = {
-    track_info_duration: { min: 0, max: 60, step: 1, suffix: "s" },
-    speaker_panel_timeout: { min: 0, max: 60, step: 1, suffix: "s" },
-    day_active_brightness: { min: 5, max: 100, step: 5, suffix: "%" },
-    night_active_brightness: { min: 5, max: 100, step: 5, suffix: "%" },
-    day_dim_brightness: { min: 0, max: 100, step: 5, suffix: "%" },
-    night_dim_brightness: { min: 0, max: 100, step: 5, suffix: "%" },
-    dim_timeout: { min: 1, max: 600, step: 1, suffix: "s" },
-    screen_saver_timeout: { min: 1, max: 1800, step: 1, suffix: "s" },
-    day_clock_brightness: { min: 1, max: 100, step: 1, suffix: "%" },
-    evening_clock_brightness: { min: 1, max: 100, step: 1, suffix: "%" },
-    schedule_on_hour: { min: 0, max: 23, step: 1, suffix: "h" },
-    schedule_off_hour: { min: 0, max: 23, step: 1, suffix: "h" },
-    schedule_wake_timeout: { min: 10, max: 3600, step: 10, suffix: "s" },
-    screen_warmth_day: { min: 0, max: 100, step: 5, suffix: "%" },
-    screen_warmth_night: { min: 0, max: 100, step: 5, suffix: "%" }
-  };
+  var FIRMWARE_MANIFEST_SLUGS = {"guition-esp32-p4-jc8012p4a1":"jc8012p4a1","guition-esp32-p4-jc1060p470":"jc1060p470","guition-esp32-p4-jc4880p443":"jc4880p443","esp32-p4-86-panel":"p4-86-panel","guition-esp32-s3-4848s040":"4848s040"};
+  var S = {"media_player":"","linked_media_player":"","day_night_sensor":"","show_remaining_time":true,"show_progress_bar":true,"auto_show_track_info":true,"track_info_duration":5,"speaker_panel_auto_close":true,"speaker_panel_timeout":10,"day_active_brightness":100,"night_active_brightness":80,"day_dim_brightness":35,"night_dim_brightness":25,"paused_dimming_enabled":true,"dim_timeout":60,"screen_saver_enabled":true,"screen_saver_timeout":300,"day_clock_brightness":35,"evening_clock_brightness":35,"day_idle_action":"Clock","night_idle_action":"Clock","schedule_enabled":false,"schedule_on_hour":6,"schedule_off_hour":20,"schedule_wake_timeout":60,"screen_warmth_day":30,"screen_warmth_night":60,"clock_time_format":"24 Hour","clock_timezone":"Home Assistant (automatic)","screen_rotation":"0","auto_update":true,"update_frequency":"Daily","developer_experimental_features":false,"device_profile":"","online":false,"wifi_strength":null,"ip_address":"","idle_action_options":["Clock","Screen Off","Disabled"],"clock_time_format_options":["24 Hour","12 Hour"],"clock_timezone_options":["Home Assistant (automatic)"],"screen_rotation_options":["0","90","180","270"],"update_frequency_options":["Hourly","Daily","Weekly"],"firmware_state":"","installed_version":"","latest_version":"","firmware_release_url":"","firmware_checking":false,"update_available":false};
+  var ENTITIES = {"media_player":{"domain":"text","name":"Media Player"},"linked_media_player":{"domain":"text","name":"Linked Media Player"},"day_night_sensor":{"domain":"text","name":"Day-Night Sensor"},"show_remaining_time":{"domain":"switch","name":"Playback: Show Remaining Time","bool":true},"show_progress_bar":{"domain":"switch","name":"Playback: Show Progress Bar","bool":true},"auto_show_track_info":{"domain":"switch","name":"Playback: Auto-Show Track Info","bool":true},"track_info_duration":{"domain":"number","name":"Playback: Track Info Duration","number":true},"speaker_panel_timeout":{"domain":"number","name":"Speakers: Auto-Close Timeout","number":true},"day_active_brightness":{"domain":"number","name":"Day: Active Brightness","number":true},"night_active_brightness":{"domain":"number","name":"Night: Active Brightness","number":true},"day_dim_brightness":{"domain":"number","name":"Day: Dim Brightness","number":true},"night_dim_brightness":{"domain":"number","name":"Night: Dim Brightness","number":true},"paused_dimming_enabled":{"domain":"switch","name":"Screen Saver: Dim When Paused","bool":true},"dim_timeout":{"domain":"number","name":"Screen Saver: Paused Dimming","number":true},"screen_saver_enabled":{"domain":"switch","name":"Screen Saver: Enabled","bool":true},"screen_saver_timeout":{"domain":"number","name":"Screen Saver: Timer","number":true},"day_clock_brightness":{"domain":"number","name":"Screen Saver: Clock Brightness","number":true},"evening_clock_brightness":{"domain":"number","name":"Screen Saver: Evening Clock Brightness","number":true},"day_idle_action":{"domain":"select","name":"Screen: Day Idle Action","optionsKey":"idle_action_options"},"night_idle_action":{"domain":"select","name":"Screen: Night Idle Action","optionsKey":"idle_action_options"},"schedule_enabled":{"domain":"switch","name":"Screen: Schedule Enabled","bool":true},"schedule_on_hour":{"domain":"number","name":"Screen: Schedule On Hour","number":true},"schedule_off_hour":{"domain":"number","name":"Screen: Schedule Off Hour","number":true},"schedule_wake_timeout":{"domain":"number","name":"Screen: Schedule Wake Timeout","number":true},"screen_warmth_day":{"domain":"number","name":"Day: Screen Warmth","number":true},"screen_warmth_night":{"domain":"number","name":"Night: Screen Warmth","number":true},"clock_time_format":{"domain":"select","name":"Clock: Time Format","optionsKey":"clock_time_format_options"},"clock_timezone":{"domain":"select","name":"Screen: Timezone","optionsKey":"clock_timezone_options"},"screen_rotation":{"domain":"select","name":"Screen Rotation","optionsKey":"screen_rotation_options"},"auto_update":{"domain":"switch","name":"Firmware: Auto Update","bool":true},"update_frequency":{"domain":"select","name":"Firmware: Update Frequency","optionsKey":"update_frequency_options"},"firmware_version":{"domain":"text_sensor","name":"Firmware: Version","firmwareVersion":true,"fetchNames":["firmware__version","firmware_version","firmware_version_sensor"]},"firmware_update":{"domain":"update","name":"Firmware: Update","update":true},"check_latest":{"domain":"button","name":"Firmware: Check for Update","skipFetch":true},"developer_experimental_features":{"domain":"switch","name":"Developer: Experimental Features","bool":true},"device_profile":{"domain":"text_sensor","name":"Device Profile"},"online":{"domain":"binary_sensor","name":"Online","bool":true},"wifi_strength":{"domain":"sensor","name":"Wifi Strength","number":true},"ip_address":{"domain":"text_sensor","name":"IP Address"}};
+  var NUMBER_LIMITS = {"track_info_duration":{"min":0,"max":60,"step":1,"suffix":"s"},"speaker_panel_timeout":{"min":0,"max":60,"step":1,"suffix":"s"},"day_active_brightness":{"min":5,"max":100,"step":5,"suffix":"%"},"night_active_brightness":{"min":5,"max":100,"step":5,"suffix":"%"},"day_dim_brightness":{"min":0,"max":100,"step":5,"suffix":"%"},"night_dim_brightness":{"min":0,"max":100,"step":5,"suffix":"%"},"dim_timeout":{"min":1,"max":600,"step":1,"suffix":"s"},"screen_saver_timeout":{"min":1,"max":1800,"step":1,"suffix":"s"},"day_clock_brightness":{"min":1,"max":100,"step":1,"suffix":"%"},"evening_clock_brightness":{"min":1,"max":100,"step":1,"suffix":"%"},"schedule_on_hour":{"min":0,"max":23,"step":1,"suffix":"h"},"schedule_off_hour":{"min":0,"max":23,"step":1,"suffix":"h"},"schedule_wake_timeout":{"min":10,"max":3600,"step":10,"suffix":"s"},"screen_warmth_day":{"min":0,"max":100,"step":5,"suffix":"%"},"screen_warmth_night":{"min":0,"max":100,"step":5,"suffix":"%"}};
 
   var els = {};
   var currentTab = "settings";
@@ -262,8 +146,13 @@
     });
   }
 
+  function hasDeviceProfile(group) {
+    var profiles = WEB_DEVICE_PROFILES[group] || [];
+    return profiles.indexOf(S.device_profile) !== -1;
+  }
+
   function isS3Display() {
-    return S.device_profile === S3_DEVICE_PROFILE;
+    return hasDeviceProfile("esp32_s3");
   }
 
   function isDeveloperExperimentalMode() {
@@ -571,7 +460,7 @@
   }
 
   function supportsTrackInfoDuration() {
-    return S.device_profile === "esp32-p4-86-panel" || S.device_profile === "guition-esp32-s3-4848s040";
+    return hasDeviceProfile("track_info_duration");
   }
 
   function idleScreenCard() {
@@ -762,7 +651,7 @@
   }
 
   function supportsScreenRotation() {
-    return S.device_profile === "esp32-p4-86-panel" || S.device_profile === "guition-esp32-p4-jc4880p443" || S.device_profile === "guition-esp32-p4-jc1060p470" || S.device_profile === "guition-esp32-p4-jc8012p4a1" || S.device_profile === "guition-esp32-s3-4848s040";
+    return hasDeviceProfile("screen_rotation");
   }
 
   function supportsClockScreenSaver() {

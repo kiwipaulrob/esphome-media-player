@@ -1,0 +1,300 @@
+{
+  "social_image": "docs/images/guition-esp32-p4-jc8012p4a1-example1.jpg",
+  "devices": [
+    {
+      "profile": "guition-esp32-p4-jc8012p4a1",
+      "asset_slug": "media-player-jc8012p4a1",
+      "web_slug": "jc8012p4a1",
+      "config": "guition-esp32-p4-jc8012p4a1",
+      "chip": "ESP32-P4",
+      "package_path": "devices/guition-esp32-p4-jc8012p4a1/packages.yaml",
+      "dev": {
+        "name": "music-dashboard-dev",
+        "friendly_name": "Music Dashboard Dev",
+        "rotation_comment": "270\u00b0 landscape (flipped); see docs/advanced/display-rotation.md",
+        "display_rotation": "270",
+        "local_components": [
+          "artwork_image",
+          "gsl3680",
+          "mipi_rgb"
+        ]
+      },
+      "esphome": {
+        "title": "Guition ESP32-P4-JC8012P4A1 Music Dashboard",
+        "name": "music-dashboard-10inch",
+        "friendly_name": "Music Dashboard 10inch",
+        "rotation_comments": [
+          "Display rotation: 0, 90 (default landscape), 180, or 270"
+        ],
+        "rotation_example": "0"
+      },
+      "docs_path": "/devices/esp32-p4-jc8012p4a1",
+      "docs": {
+        "order": 5,
+        "sidebar": "ESP32-P4 JC8012P4A1 (10.1\")"
+      },
+      "purchase": {
+        "label": "AliExpress",
+        "url": "https://s.click.aliexpress.com/e/_c3wsnU43",
+        "accessories": [
+          {
+            "label": "Desktop stand (3D printable)",
+            "source": "MakerWorld",
+            "url": "https://makerworld.com/en/models/2490049-guition-p4-10inch-screen-stand#profileId-2736046"
+          }
+        ]
+      },
+      "display": {
+        "name": "Guition ESP32-P4 JC8012P4A1",
+        "label": "JC8012P4A1",
+        "size": "10.1 in",
+        "width": 1280,
+        "height": 800,
+        "default_rotation": "90",
+        "layout": "landscape-side-panel",
+        "shape": "landscape"
+      },
+      "assets": {
+        "icons": "devices/guition-esp32-p4-jc8012p4a1/assets/icons.yaml"
+      },
+      "installer": {
+        "order": 1,
+        "slots": 20,
+        "cols": 5,
+        "rows": 4
+      }
+    },
+    {
+      "profile": "guition-esp32-p4-jc1060p470",
+      "asset_slug": "media-player-jc1060p470",
+      "web_slug": "jc1060p470",
+      "config": "guition-esp32-p4-jc1060p470",
+      "chip": "ESP32-P4",
+      "package_path": "devices/guition-esp32-p4-jc1060p470/packages.yaml",
+      "dev": {
+        "name": "music-dashboard-dev",
+        "friendly_name": "Music Dashboard Dev",
+        "rotation_comment": "Landscape by default; see docs/advanced/display-rotation.md",
+        "display_rotation": "0",
+        "local_components": [
+          "artwork_image",
+          "mipi_rgb"
+        ]
+      },
+      "esphome": {
+        "title": "Guition ESP32-P4-JC1060P470 Music Dashboard",
+        "name": "music-dashboard-7inch",
+        "friendly_name": "Music Dashboard 7inch",
+        "rotation_comments": [
+          "Native LVGL display rotation."
+        ],
+        "rotation_example": "180"
+      },
+      "docs_path": "/devices/esp32-p4-jc1060p470",
+      "docs": {
+        "order": 4,
+        "sidebar": "ESP32-P4 JC1060P470 (7\")"
+      },
+      "purchase": {
+        "label": "AliExpress",
+        "url": "https://s.click.aliexpress.com/e/_c4LLo3rH",
+        "accessories": []
+      },
+      "display": {
+        "name": "Guition ESP32-P4 JC1060P470",
+        "label": "JC1060P470",
+        "size": "7 in",
+        "width": 1024,
+        "height": 600,
+        "default_rotation": "0",
+        "layout": "landscape-side-panel",
+        "shape": "landscape"
+      },
+      "assets": {
+        "icons": "common/assets/icons-medium.yaml"
+      },
+      "installer": {
+        "order": 2,
+        "slots": 15,
+        "cols": 5,
+        "rows": 3
+      }
+    },
+    {
+      "profile": "guition-esp32-p4-jc4880p443",
+      "asset_slug": "media-player-jc4880p443",
+      "web_slug": "jc4880p443",
+      "config": "guition-esp32-p4-jc4880p443",
+      "chip": "ESP32-P4",
+      "package_path": "devices/guition-esp32-p4-jc4880p443/packages-90.yaml",
+      "alternate_package_paths": [
+        "devices/guition-esp32-p4-jc4880p443/packages.yaml"
+      ],
+      "dev": {
+        "name": "music-dashboard-dev",
+        "friendly_name": "Music Dashboard Dev",
+        "rotation_comment": "Portrait by default; see docs/advanced/display-rotation.md",
+        "display_rotation": "0",
+        "local_components": [
+          "artwork_image",
+          "mipi_rgb"
+        ]
+      },
+      "esphome": {
+        "title": "Guition ESP32-P4-JC4880P443 Music Dashboard",
+        "name": "music-dashboard-43inch",
+        "friendly_name": "Music Dashboard 4.3inch",
+        "rotation_comments": [
+          "Native LVGL display rotation. The default public build uses the landscape",
+          "package, so 90 is the normal orientation."
+        ],
+        "rotation_example": "270"
+      },
+      "docs_path": "/devices/esp32-p4-jc4880p443",
+      "docs": {
+        "order": 3,
+        "sidebar": "ESP32-P4 JC4880P443 (4.3\")"
+      },
+      "purchase": {
+        "label": "AliExpress",
+        "url": "https://www.aliexpress.com/item/1005009618259341.html",
+        "accessories": []
+      },
+      "display": {
+        "name": "Guition ESP32-P4 JC4880P443",
+        "label": "JC4880P443",
+        "size": "4.3 in",
+        "width": 480,
+        "height": 800,
+        "default_rotation": "90",
+        "layout": "landscape-side-panel",
+        "shape": "portrait"
+      },
+      "assets": {
+        "icons": "common/assets/icons-medium.yaml"
+      },
+      "installer": {
+        "order": 4,
+        "slots": 6,
+        "cols": 2,
+        "rows": 3
+      },
+      "build_aliases": [
+        "guition-esp32-p4-jc4880p443-90"
+      ]
+    },
+    {
+      "profile": "esp32-p4-86-panel",
+      "asset_slug": "media-player-p4-86-panel",
+      "web_slug": "p4-86-panel",
+      "config": "esp32-p4-86-panel",
+      "chip": "ESP32-P4",
+      "package_path": "devices/esp32-p4-86-panel/packages.yaml",
+      "dev": {
+        "name": "music-dashboard-dev",
+        "friendly_name": "Music Dashboard Dev",
+        "local_components": [
+          "artwork_image",
+          "mipi_rgb"
+        ]
+      },
+      "esphome": {
+        "title": "Waveshare ESP32-P4 86 Panel Music Dashboard",
+        "name": "music-dashboard",
+        "friendly_name": "Music Dashboard"
+      },
+      "docs_path": "/devices/esp32-p4-86-panel",
+      "docs": {
+        "order": 2,
+        "sidebar": "ESP32-P4 86 Panel (4\")"
+      },
+      "purchase": {
+        "label": "Waveshare",
+        "url": "https://www.waveshare.com/esp32-p4-wifi6-touch-lcd-4b.htm",
+        "accessories": [
+          {
+            "label": "Desktop stand (3D printable)",
+            "source": "MakerWorld",
+            "url": "https://makerworld.com/en/models/2720366-waveshare-esp32-p4-smart-86-box-screen-desk-stand#profileId-3013481"
+          }
+        ]
+      },
+      "display": {
+        "name": "ESP32-P4 86 Panel",
+        "label": "P4 86 Panel",
+        "size": "4 in",
+        "width": 720,
+        "height": 720,
+        "default_rotation": "0",
+        "layout": "square",
+        "shape": "square"
+      },
+      "assets": {
+        "icons": "devices/esp32-p4-86-panel/assets/icons.yaml"
+      },
+      "installer": {
+        "order": 3,
+        "slots": 9,
+        "cols": 3,
+        "rows": 3
+      }
+    },
+    {
+      "profile": "guition-esp32-s3-4848s040",
+      "asset_slug": "media-player-4848s040",
+      "web_slug": "4848s040",
+      "config": "guition-esp32-s3-4848s040",
+      "chip": "ESP32-S3",
+      "package_path": "devices/guition-esp32-s3-4848s040/packages.yaml",
+      "dev": {
+        "name": "music-dashboard-dev",
+        "friendly_name": "Music Dashboard Dev",
+        "local_components": [
+          "artwork_image",
+          "mipi_rgb"
+        ]
+      },
+      "esphome": {
+        "title": "Guition ESP32-S3-4848S040 Music Dashboard",
+        "name": "music-dashboard",
+        "friendly_name": "Music Dashboard"
+      },
+      "docs_path": "/devices/esp32-s3-4848s040",
+      "docs": {
+        "order": 1,
+        "sidebar": "ESP32-S3 4848S040 (4\")"
+      },
+      "purchase": {
+        "label": "AliExpress",
+        "url": "https://s.click.aliexpress.com/e/_c3sIhvBv",
+        "note": "(~£16)",
+        "accessories": [
+          {
+            "label": "Desktop stand (3D printable)",
+            "source": "MakerWorld",
+            "url": "https://makerworld.com/en/models/2327976-touch-screen-desktop-stand-for-guition-4848s040#profileId-2543111"
+          }
+        ]
+      },
+      "display": {
+        "name": "Guition ESP32-S3 4848S040",
+        "label": "4848S040",
+        "size": "4 in",
+        "width": 480,
+        "height": 480,
+        "default_rotation": "0",
+        "layout": "square",
+        "shape": "square"
+      },
+      "assets": {
+        "icons": "devices/guition-esp32-s3-4848s040/assets/icons.yaml"
+      },
+      "installer": {
+        "order": 5,
+        "slots": 9,
+        "cols": 3,
+        "rows": 3
+      }
+    }
+  ]
+}

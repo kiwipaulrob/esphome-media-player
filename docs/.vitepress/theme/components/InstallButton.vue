@@ -54,73 +54,30 @@
 <script setup>
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
+import deviceCatalog from '../../../../product/devices.json'
 
 const props = defineProps({
   device: { type: String, default: null },
 })
 
-const allDevices = [
-  {
-    key: 'jc8012p4a1',
-    label: 'JC8012P4A1',
-    size: '10.1 in',
-    resolution: '1280 x 800',
-    slots: 20,
-    cols: 5,
-    rows: 4,
-    aspect: '1280 / 800',
-    shape: 'landscape',
-    manifest: 'jc8012p4a1/manifest.json',
-  },
-  {
-    key: 'jc1060p470',
-    label: 'JC1060P470',
-    size: '7 in',
-    resolution: '1024 x 600',
-    slots: 15,
-    cols: 5,
-    rows: 3,
-    aspect: '1024 / 600',
-    shape: 'landscape',
-    manifest: 'jc1060p470/manifest.json',
-  },
-  {
-    key: 'p4-86-panel',
-    label: 'P4 86 Panel',
-    size: '4 in',
-    resolution: '720 x 720',
-    slots: 9,
-    cols: 3,
-    rows: 3,
-    aspect: '1 / 1',
-    shape: 'square',
-    manifest: 'p4-86-panel/manifest.json',
-  },
-  {
-    key: 'jc4880p443',
-    label: 'JC4880P443',
-    size: '4.3 in',
-    resolution: '480 x 800',
-    slots: 6,
-    cols: 2,
-    rows: 3,
-    aspect: '480 / 800',
-    shape: 'portrait',
-    manifest: 'jc4880p443/manifest.json',
-  },
-  {
-    key: '4848s040',
-    label: '4848S040',
-    size: '4 in',
-    resolution: '480 x 480',
-    slots: 9,
-    cols: 3,
-    rows: 3,
-    aspect: '1 / 1',
-    shape: 'square',
-    manifest: '4848s040/manifest.json',
-  },
-]
+const allDevices = [...deviceCatalog.devices]
+  .sort((a, b) => a.installer.order - b.installer.order)
+  .map((availableDevice) => {
+    const width = availableDevice.display.width
+    const height = availableDevice.display.height
+    return {
+      key: availableDevice.web_slug,
+      label: availableDevice.display.label,
+      size: availableDevice.display.size,
+      resolution: `${width} x ${height}`,
+      slots: availableDevice.installer.slots,
+      cols: availableDevice.installer.cols,
+      rows: availableDevice.installer.rows,
+      aspect: width === height ? '1 / 1' : `${width} / ${height}`,
+      shape: availableDevice.display.shape,
+      manifest: `${availableDevice.web_slug}/manifest.json`,
+    }
+  })
 
 const visibleDevices = computed(() => {
   if (props.device) {

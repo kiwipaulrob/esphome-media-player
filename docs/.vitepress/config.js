@@ -1,8 +1,14 @@
+import { readFileSync } from 'node:fs'
+
 const siteUrl = 'https://jtenniswood.github.io'
 const base = '/esphome-media-player/'
 const siteName = 'ESPHome Media Player'
 const siteDescription = 'A Home Assistant media controller for ESP32 touchscreen displays, built with ESPHome and LVGL.'
-const socialImage = 'https://raw.githubusercontent.com/jtenniswood/esphome-media-player/main/docs/images/guition-esp32-p4-jc8012p4a1-example1.jpg'
+const deviceCatalog = JSON.parse(readFileSync(new URL('../../product/devices.json', import.meta.url), 'utf8'))
+const socialImage = `https://raw.githubusercontent.com/jtenniswood/esphome-media-player/main/${deviceCatalog.social_image}`
+const deviceSidebarItems = [...deviceCatalog.devices]
+  .sort((a, b) => a.docs.order - b.docs.order)
+  .map((device) => ({ text: device.docs.sidebar, link: device.docs_path }))
 
 function canonicalUrl(page) {
   const path = page
@@ -59,13 +65,7 @@ export default {
       },
       {
         text: 'Devices',
-        items: [
-          { text: 'ESP32-S3 4848S040 (4")', link: '/devices/esp32-s3-4848s040' },
-          { text: 'ESP32-P4 86 Panel (4")', link: '/devices/esp32-p4-86-panel' },
-          { text: 'ESP32-P4 JC4880P443 (4.3")', link: '/devices/esp32-p4-jc4880p443' },
-          { text: 'ESP32-P4 JC1060P470 (7")', link: '/devices/esp32-p4-jc1060p470' },
-          { text: 'ESP32-P4 JC8012P4A1 (10.1")', link: '/devices/esp32-p4-jc8012p4a1' },
-        ],
+        items: deviceSidebarItems,
       },
       {
         text: 'Features',

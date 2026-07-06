@@ -13,12 +13,14 @@ from tempfile import TemporaryDirectory
 from threading import Thread
 
 import firmware_release
+from product_model import load_devices
 
 
-SLUG = "media-player-4848s040"
-WEB_SLUG = "4848s040"
+SAMPLE_DEVICE = load_devices()[0]
+SLUG = SAMPLE_DEVICE.asset_slug
+WEB_SLUG = SAMPLE_DEVICE.web_slug
 VERSION = "v9.8.7"
-CHIP = "ESP32-S3"
+CHIP = SAMPLE_DEVICE.chip
 PROJECT_NAME = "jtenniswood.media-player"
 
 

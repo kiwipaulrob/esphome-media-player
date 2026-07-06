@@ -204,8 +204,8 @@ lvgl:
             indicator:
               bg_color: 0xFFFFFF
               radius: 0
-        - !include ../setup/setup_prompt.yaml
-        - !include ../setup/actions_prompt.yaml
+        - !include ../../../common/setup/setup_prompt.yaml
+        - !include ../../../common/setup/actions_prompt.yaml
 
         # ---------------------------------------------------------------
         # SETTINGS PANEL (swipe-down from top)
@@ -2444,9 +2444,9 @@ lvgl:
                   on_press:
                     - script.execute: close_settings_panel
 
-        - !include ../setup/ha_setup_prompt.yaml
-        - !include ../setup/wifi_setup_prompt.yaml
-        - !include ../setup/loading_screen.yaml
+        - !include ../../../common/setup/ha_setup_prompt.yaml
+        - !include ../../../common/setup/wifi_setup_prompt.yaml
+        - !include ../../../common/setup/loading_screen.yaml
 
         # ---------------------------------------------------------------
         # CLOCK SCREENSAVER

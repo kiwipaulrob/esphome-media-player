@@ -39,11 +39,15 @@ globals:
     initial_value: 'false'
 
 packages:
+  ui_state: !include ui_state.yaml
   time_sync: !include ../addon/time.yaml
   timezone: !include ../addon/timezone.yaml
+  esphome_ota: !include ../addon/esphome_ota.yaml
+  home_assistant_api: !include ../addon/home_assistant_api.yaml
   music: !include ../addon/music.yaml
   backlight: !include ../addon/backlight.yaml
   network: !include ../addon/network.yaml
+  screen_rotation: !include ../addon/screen_rotation.yaml
   speaker_group: !include ../addon/speaker_group.yaml
   accent_color: !include ../addon/accent_color.yaml
   firmware_update: !include ../addon/firmware_update.yaml
