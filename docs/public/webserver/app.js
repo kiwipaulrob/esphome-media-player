@@ -72,8 +72,8 @@
     screen_warmth_night: 60,
     clock_time_format: "24 Hour",
     clock_time_format_options: ["24 Hour", "12 Hour"],
-    clock_timezone: "UTC (GMT+0)",
-    clock_timezone_options: ["UTC (GMT+0)"],
+    clock_timezone: "Home Assistant (automatic)",
+    clock_timezone_options: ["Home Assistant (automatic)"],
     screen_rotation: "0",
     screen_rotation_options: ["0", "90", "180", "270"],
     auto_update: true,
@@ -1133,6 +1133,7 @@
   }
 
   function formatTimezoneOption(option) {
+    if (option === "Home Assistant (automatic)") return option;
     var tzId = timezoneId(option);
     var offset = timezoneOffsetMinutes(tzId, new Date());
     if (offset == null || !isFinite(offset)) return option;

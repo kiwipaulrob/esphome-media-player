@@ -81,7 +81,7 @@ The browser Device tab contains clock settings, day/night source, active screen 
 | Setting | Description |
 |---------|-------------|
 | **Clock Format** | Display the clock screen saver in 24-hour or 12-hour format. The 12-hour format omits AM/PM so the large clock still fits and can drift for burn-in prevention. Defaults to 24-hour. |
-| **Timezone** | IANA-style timezone for the clock and scheduled screen-off controls. The browser shows the current GMT offset. Defaults to UTC. |
+| **Timezone** | Defaults to Home Assistant's timezone for the clock and scheduled screen-off controls. You can still choose a manual IANA-style timezone override; the browser shows the current GMT offset for manual options. |
 
 ## Day/Night
 
