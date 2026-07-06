@@ -1,9 +1,10 @@
 # =============================================================================
 # CLOCK TIMEZONE
 # =============================================================================
-# Matches the espcontrol timezone selector: values are IANA-style timezone
-# names with a simple GMT hint. The browser can display the current GMT
-# offset, while firmware maps the selected timezone to a POSIX TZ string.
+# Defaults to Home Assistant's timezone sync. Manual options match the
+# espcontrol timezone selector: values are IANA-style timezone names with a
+# simple GMT hint. The browser can display the current GMT offset, while
+# firmware maps the selected timezone to a POSIX TZ string.
 # =============================================================================
 
 
@@ -39,8 +40,9 @@ select:
     internal: ${ha_config_internal}
     optimistic: true
     restore_value: true
-    initial_option: "UTC (GMT+0)"
+    initial_option: "Home Assistant (automatic)"
     options:
+      - "Home Assistant (automatic)"
       - "Pacific/Midway (GMT-11)"
       - "Pacific/Pago_Pago (GMT-11)"
       - "Pacific/Honolulu (GMT-10)"
@@ -377,6 +379,12 @@ script:
           };
           std::string sel = id(clock_timezone).current_option();
           if (sel.empty()) return;
+
+          if (sel == "Home Assistant (automatic)") {
+            id(tz_posix) = "";
+            ESP_LOGI("timezone", "Using Home Assistant timezone");
+            return;
+          }
 
           size_t hint = sel.find(" (");
           std::string tz_id = hint == std::string::npos ? sel : sel.substr(0, hint);

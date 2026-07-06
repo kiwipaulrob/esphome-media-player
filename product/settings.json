@@ -334,13 +334,13 @@
     },
     {
       "key": "clock_timezone",
-      "default": "UTC (GMT+0)",
+      "default": "Home Assistant (automatic)",
       "entity": { "domain": "select", "name": "Screen: Timezone", "optionsKey": "clock_timezone_options" },
       "docs": {
         "section": "Clock",
         "order": 20,
         "label": "Timezone",
-        "description": "IANA-style timezone for the clock and scheduled screen-off controls. The browser shows the current GMT offset."
+        "description": "Defaults to Home Assistant's timezone for the clock and scheduled screen-off controls. Manual IANA-style timezone overrides remain available, and the browser shows the current GMT offset for manual options."
       }
     },
     {
@@ -436,7 +436,7 @@
   "browser_state": {
     "idle_action_options": ["Clock", "Screen Off", "Disabled"],
     "clock_time_format_options": ["24 Hour", "12 Hour"],
-    "clock_timezone_options": ["UTC (GMT+0)"],
+    "clock_timezone_options": ["Home Assistant (automatic)"],
     "screen_rotation_options": ["0", "90", "180", "270"],
     "update_frequency_options": ["Hourly", "Daily", "Weekly"],
     "firmware_state": "",

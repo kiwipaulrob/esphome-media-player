@@ -2,7 +2,6 @@
 time:
   - platform: homeassistant
     id: ha_time
-    timezone: UTC0
     on_time:
       - seconds: 0
         minutes: '*'

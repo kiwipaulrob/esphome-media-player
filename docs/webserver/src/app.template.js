@@ -1022,6 +1022,7 @@
   }
 
   function formatTimezoneOption(option) {
+    if (option === "Home Assistant (automatic)") return option;
     var tzId = timezoneId(option);
     var offset = timezoneOffsetMinutes(tzId, new Date());
     if (offset == null || !isFinite(offset)) return option;

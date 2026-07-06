@@ -76,7 +76,7 @@ This is useful when you want day/night to depend on more than just the sun — f
 | **Day Clock Brightness** | Backlight level for the daytime clock screen saver. | 35% |
 | **Evening Clock Brightness** | Backlight level for the evening clock screen saver. | 35% |
 | **Clock Format** | Clock display format: 24-hour or 12-hour without AM/PM. | 24 Hour |
-| **Timezone** | IANA-style timezone for the clock and scheduled screen-off controls. The browser shows the current GMT offset. | UTC |
+| **Timezone** | Defaults to Home Assistant's timezone for the clock and scheduled screen-off controls. Manual IANA-style timezone overrides remain available. | Home Assistant |
 
 ### Night Schedule
 
