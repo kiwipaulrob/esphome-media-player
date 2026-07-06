@@ -226,6 +226,19 @@ def check_devices() -> None:
     if device_button_includes:
         fail(f"Device packages must include the shared button theme from common/theme: {device_button_includes}")
 
+    common_placeholder = ROOT / "common" / "assets" / "placeholder.png"
+    if not common_placeholder.is_file():
+        fail("common/assets/placeholder.png must provide the shared artwork placeholder")
+    music_yaml = read(ROOT / "common" / "addon" / "music.yaml")
+    if "common/assets/placeholder.png" not in music_yaml:
+        fail("common/addon/music.yaml must use the shared artwork placeholder")
+    duplicated_placeholders = sorted((ROOT / "devices").glob("*/assets/placeholder.png"))
+    if duplicated_placeholders:
+        fail(
+            "Artwork placeholder must stay shared in common/assets; remove per-device copies in "
+            f"{[str(path.relative_to(ROOT)) for path in duplicated_placeholders]}"
+        )
+
     release_yml = read(ROOT / ".github" / "workflows" / "release.yml")
     if "python3 scripts/product_model.py release-matrix" not in release_yml:
         fail("release.yml must build its device matrix from product/devices.json")
