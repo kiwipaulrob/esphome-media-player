@@ -27,9 +27,10 @@
   favicon.href = "data:image/svg+xml," + encodeURIComponent(faviconSvg);
   document.head.appendChild(favicon);
 
-  var DEFAULT_SPEAKER_PANEL_TIMEOUT = 10;
-  var SPEAKER_PANEL_TIMEOUT_OPTIONS = [5, 10, 20, 30, 60];
-  var TRACK_INFO_DURATION_OPTIONS = [0, 3, 5, 10, 15, 20, 30, 60];
+  var DEFAULT_SPEAKER_PANEL_TIMEOUT = __DEFAULT_SPEAKER_PANEL_TIMEOUT__;
+  var SETTING_OPTIONS = __WEB_SETTING_OPTIONS__;
+  var SPEAKER_PANEL_TIMEOUT_OPTIONS = SETTING_OPTIONS.speaker_panel_timeout;
+  var TRACK_INFO_DURATION_OPTIONS = SETTING_OPTIONS.track_info_duration;
   var S3_DEVICE_PROFILE = "guition-esp32-s3-4848s040";
   var WEB_ACTIVITY_HEARTBEAT_MS = 10000;
   var FIRMWARE_INSTALL_REFRESH_MS = 5000;

@@ -11,6 +11,8 @@ import sys
 
 from product_model import (
     firmware_manifest_slugs,
+    web_setting_default,
+    web_setting_options,
     web_settings_entities,
     web_settings_number_limits,
     web_settings_state,
@@ -34,6 +36,8 @@ def build_bundle() -> str:
     replacements = {
         "__MEDIA_PLAYER_CSS__": js_literal(css),
         "__FIRMWARE_MANIFEST_SLUGS__": js_literal(firmware_manifest_slugs()),
+        "__DEFAULT_SPEAKER_PANEL_TIMEOUT__": js_literal(web_setting_default("speaker_panel_timeout")),
+        "__WEB_SETTING_OPTIONS__": js_literal(web_setting_options()),
         "__WEB_SETTINGS_STATE__": js_literal(web_settings_state()),
         "__WEB_SETTINGS_ENTITIES__": js_literal(web_settings_entities()),
         "__WEB_SETTINGS_NUMBER_LIMITS__": js_literal(web_settings_number_limits()),

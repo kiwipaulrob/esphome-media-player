@@ -138,6 +138,23 @@ def web_settings_number_limits() -> dict[str, dict[str, Any]]:
     }
 
 
+def web_setting_options() -> dict[str, list[Any]]:
+    catalog = load_settings_catalog()
+    return {
+        setting["key"]: setting["options"]
+        for setting in catalog["settings"]
+        if "options" in setting
+    }
+
+
+def web_setting_default(key: str) -> Any:
+    catalog = load_settings_catalog()
+    for setting in catalog["settings"]:
+        if setting["key"] == key and "default" in setting:
+            return setting["default"]
+    raise KeyError(key)
+
+
 def release_matrix() -> dict[str, list[dict[str, str]]]:
     return {
         "include": [

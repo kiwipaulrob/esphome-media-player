@@ -34,12 +34,14 @@
       "key": "track_info_duration",
       "default": 5,
       "entity": { "domain": "number", "name": "Playback: Track Info Duration", "number": true },
+      "options": [0, 3, 5, 10, 15, 20, 30, 60],
       "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" }
     },
     {
       "key": "speaker_panel_timeout",
       "default": 10,
       "entity": { "domain": "number", "name": "Speakers: Auto-Close Timeout", "number": true },
+      "options": [5, 10, 20, 30, 60],
       "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" }
     },
     {

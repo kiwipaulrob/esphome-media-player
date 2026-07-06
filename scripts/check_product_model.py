@@ -117,6 +117,17 @@ def check_settings() -> None:
         if limits and entity.get("domain") != "number":
             fail(f"Setting {setting['key']} has limits but is not a number entity")
 
+        options = setting.get("options")
+        if options:
+            if "default" in setting and setting["default"] not in options:
+                fail(f"Setting {setting['key']} default is not present in its options list")
+            if limits:
+                min_value = limits["min"]
+                max_value = limits["max"]
+                invalid = [value for value in options if value < min_value or value > max_value]
+                if invalid:
+                    fail(f"Setting {setting['key']} has options outside its limits: {invalid}")
+
 
 def main() -> int:
     try:
