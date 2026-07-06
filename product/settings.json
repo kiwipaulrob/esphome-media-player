@@ -3,174 +3,373 @@
     {
       "key": "media_player",
       "default": "",
-      "entity": { "domain": "text", "name": "Media Player" }
+      "entity": { "domain": "text", "name": "Media Player" },
+      "docs": {
+        "section": "Media Player",
+        "order": 10,
+        "label": "Media Player",
+        "description": "Primary Home Assistant media_player entity to control, for example media_player.living_room_speaker. Saving a valid entity may reboot the device so the Home Assistant subscription is refreshed."
+      }
     },
     {
       "key": "linked_media_player",
       "default": "",
-      "entity": { "domain": "text", "name": "Linked Media Player" }
+      "entity": { "domain": "text", "name": "Linked Media Player" },
+      "docs": {
+        "section": "Advanced",
+        "order": 10,
+        "label": "Linked Media Player",
+        "description": "Optional secondary media_player entity used when the main speaker switches to a TV or Line-in source. Leave empty to disable. Saving a valid entity may reboot the device so the Home Assistant subscription is refreshed."
+      }
     },
     {
       "key": "day_night_sensor",
       "default": "",
-      "entity": { "domain": "text", "name": "Day-Night Sensor" }
+      "entity": { "domain": "text", "name": "Day-Night Sensor" },
+      "docs": {
+        "section": "Day/Night",
+        "order": 10,
+        "label": "Day/Night Source",
+        "description": "Optional binary_sensor or input_boolean entity to control day/night mode. On means day and off means night. Leave empty to use sun.sun."
+      }
     },
     {
       "key": "show_remaining_time",
       "default": true,
-      "entity": { "domain": "switch", "name": "Playback: Show Remaining Time", "bool": true }
+      "entity": { "domain": "switch", "name": "Playback: Show Remaining Time", "bool": true },
+      "docs": {
+        "section": "Playback",
+        "order": 10,
+        "label": "Track Clock",
+        "description": "On shows time remaining; off shows the track length. Tap the time label on the device to toggle this at any time."
+      }
     },
     {
       "key": "show_progress_bar",
       "default": true,
-      "entity": { "domain": "switch", "name": "Playback: Show Progress Bar", "bool": true }
+      "entity": { "domain": "switch", "name": "Playback: Show Progress Bar", "bool": true },
+      "docs": {
+        "section": "Playback",
+        "order": 20,
+        "label": "Show Progress Bar",
+        "description": "Shows or hides the playback progress bar."
+      }
     },
     {
       "key": "auto_show_track_info",
       "default": true,
-      "entity": { "domain": "switch", "name": "Playback: Auto-Show Track Info", "bool": true }
+      "entity": { "domain": "switch", "name": "Playback: Auto-Show Track Info", "bool": true },
+      "docs": {
+        "section": "Playback",
+        "order": 30,
+        "label": "Auto-Show Track Info",
+        "description": "Shows track title and artist automatically when new playback information arrives. Turn this off to keep square screens focused on artwork and the progress bar; tap the screen to show or hide the info manually. Shown on the ESP32-S3 4848S040 and ESP32-P4 86 Panel."
+      }
     },
     {
       "key": "track_info_duration",
       "default": 5,
       "entity": { "domain": "number", "name": "Playback: Track Info Duration", "number": true },
       "options": [0, 3, 5, 10, 15, 20, 30, 60],
-      "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" }
+      "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" },
+      "docs": {
+        "section": "Playback",
+        "order": 40,
+        "label": "Track Info Duration",
+        "description": "How long track info stays visible after artwork loads or playback starts. Choose Always to keep track info visible and never auto-hide it. Shown on the ESP32-S3 4848S040 and ESP32-P4 86 Panel."
+      }
+    },
+    {
+      "key": "speaker_panel_auto_close",
+      "default": true,
+      "docs": {
+        "section": "Volume",
+        "order": 10,
+        "label": "Speaker Panel Auto-Close",
+        "description": "Turns automatic closing of the volume/speaker panel on or off."
+      }
     },
     {
       "key": "speaker_panel_timeout",
       "default": 10,
       "entity": { "domain": "number", "name": "Speakers: Auto-Close Timeout", "number": true },
       "options": [5, 10, 20, 30, 60],
-      "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" }
+      "limits": { "min": 0, "max": 60, "step": 1, "suffix": "s" },
+      "docs": {
+        "section": "Volume",
+        "order": 20,
+        "label": "Timer",
+        "description": "Time without touch interaction before the speaker panel automatically closes and returns to the now-playing view."
+      }
     },
     {
       "key": "day_active_brightness",
       "default": 100,
       "entity": { "domain": "number", "name": "Day: Active Brightness", "number": true },
-      "limits": { "min": 5, "max": 100, "step": 5, "suffix": "%" }
+      "limits": { "min": 5, "max": 100, "step": 5, "suffix": "%" },
+      "docs": {
+        "section": "Screen Brightness",
+        "order": 10,
+        "label": "Day Active Brightness",
+        "description": "Screen brightness during active use in daytime mode."
+      }
     },
     {
       "key": "night_active_brightness",
       "default": 80,
       "entity": { "domain": "number", "name": "Night: Active Brightness", "number": true },
-      "limits": { "min": 5, "max": 100, "step": 5, "suffix": "%" }
+      "limits": { "min": 5, "max": 100, "step": 5, "suffix": "%" },
+      "docs": {
+        "section": "Screen Brightness",
+        "order": 20,
+        "label": "Night Active Brightness",
+        "description": "Screen brightness during active use in night mode."
+      }
     },
     {
       "key": "day_dim_brightness",
       "default": 35,
       "entity": { "domain": "number", "name": "Day: Dim Brightness", "number": true },
-      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" },
+      "docs": {
+        "section": "Idle Screen",
+        "order": 30,
+        "label": "Day Dimmed Brightness",
+        "description": "Brightness after the paused dimming timer during the day."
+      }
     },
     {
       "key": "night_dim_brightness",
       "default": 25,
       "entity": { "domain": "number", "name": "Night: Dim Brightness", "number": true },
-      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" },
+      "docs": {
+        "section": "Idle Screen",
+        "order": 40,
+        "label": "Night Dimmed Brightness",
+        "description": "Brightness after the paused dimming timer at night."
+      }
     },
     {
       "key": "paused_dimming_enabled",
       "default": true,
-      "entity": { "domain": "switch", "name": "Screen Saver: Dim When Paused", "bool": true }
+      "entity": { "domain": "switch", "name": "Screen Saver: Dim When Paused", "bool": true },
+      "docs": {
+        "section": "Idle Screen",
+        "order": 10,
+        "label": "Dim when idle",
+        "description": "Turns paused idle dimming on or off."
+      }
     },
     {
       "key": "dim_timeout",
       "default": 60,
       "entity": { "domain": "number", "name": "Screen Saver: Paused Dimming", "number": true },
-      "limits": { "min": 1, "max": 600, "step": 1, "suffix": "s" }
+      "limits": { "min": 1, "max": 600, "step": 1, "suffix": "s" },
+      "docs": {
+        "section": "Idle Screen",
+        "order": 20,
+        "label": "Dim After",
+        "description": "Time after playback pauses before the screen dims."
+      }
     },
     {
       "key": "screen_saver_enabled",
       "default": true,
-      "entity": { "domain": "switch", "name": "Screen Saver: Enabled", "bool": true }
+      "entity": { "domain": "switch", "name": "Screen Saver: Enabled", "bool": true },
+      "docs": {
+        "section": "Screen Saver",
+        "order": 10,
+        "label": "Screen Saver",
+        "description": "Turns the clock/off screen saver step on or off. When off, the browser hides the screen saver options."
+      }
     },
     {
       "key": "screen_saver_timeout",
       "default": 300,
       "entity": { "domain": "number", "name": "Screen Saver: Timer", "number": true },
-      "limits": { "min": 1, "max": 1800, "step": 1, "suffix": "s" }
+      "limits": { "min": 1, "max": 1800, "step": 1, "suffix": "s" },
+      "docs": {
+        "section": "Screen Saver",
+        "order": 20,
+        "label": "Start Screen Saver After",
+        "description": "Time after dimming before the idle action runs."
+      }
     },
     {
       "key": "day_clock_brightness",
       "default": 35,
       "entity": { "domain": "number", "name": "Screen Saver: Clock Brightness", "number": true },
-      "limits": { "min": 1, "max": 100, "step": 1, "suffix": "%" }
+      "limits": { "min": 1, "max": 100, "step": 1, "suffix": "%" },
+      "docs": {
+        "section": "Screen Saver",
+        "order": 40,
+        "label": "Day Clock Brightness",
+        "description": "Backlight level for the daytime clock screen saver. Shown when the daytime action is Clock."
+      }
     },
     {
       "key": "evening_clock_brightness",
       "default": 35,
       "entity": { "domain": "number", "name": "Screen Saver: Evening Clock Brightness", "number": true },
-      "limits": { "min": 1, "max": 100, "step": 1, "suffix": "%" }
+      "limits": { "min": 1, "max": 100, "step": 1, "suffix": "%" },
+      "docs": {
+        "section": "Screen Saver",
+        "order": 60,
+        "label": "Evening Clock Brightness",
+        "description": "Backlight level for the evening clock screen saver. Shown when the evening action is Clock."
+      }
     },
     {
       "key": "day_idle_action",
       "default": "Clock",
-      "entity": { "domain": "select", "name": "Screen: Day Idle Action", "optionsKey": "idle_action_options" }
+      "entity": { "domain": "select", "name": "Screen: Day Idle Action", "optionsKey": "idle_action_options" },
+      "docs": {
+        "section": "Screen Saver",
+        "order": 30,
+        "label": "Daytime Screen Saver",
+        "description": "What happens during the day: Clock, Screen Off, or Disabled."
+      }
     },
     {
       "key": "night_idle_action",
       "default": "Clock",
-      "entity": { "domain": "select", "name": "Screen: Night Idle Action", "optionsKey": "idle_action_options" }
+      "entity": { "domain": "select", "name": "Screen: Night Idle Action", "optionsKey": "idle_action_options" },
+      "docs": {
+        "section": "Screen Saver",
+        "order": 50,
+        "label": "Evening Screen Saver",
+        "description": "What happens in the evening: Clock, Screen Off, or Disabled."
+      }
     },
     {
       "key": "schedule_enabled",
       "default": false,
-      "entity": { "domain": "switch", "name": "Screen: Schedule Enabled", "bool": true }
+      "entity": { "domain": "switch", "name": "Screen: Schedule Enabled", "bool": true },
+      "docs": {
+        "section": "Night Schedule",
+        "order": 10,
+        "label": "Schedule Screen Off",
+        "description": "Turns the daily scheduled screen-off behavior on or off."
+      }
     },
     {
       "key": "schedule_on_hour",
       "default": 6,
       "entity": { "domain": "number", "name": "Screen: Schedule On Hour", "number": true },
-      "limits": { "min": 0, "max": 23, "step": 1, "suffix": "h" }
+      "limits": { "min": 0, "max": 23, "step": 1, "suffix": "h" },
+      "docs": {
+        "section": "Night Schedule",
+        "order": 20,
+        "label": "On Time",
+        "description": "Hour when the screen becomes available again."
+      }
     },
     {
       "key": "schedule_off_hour",
       "default": 20,
       "entity": { "domain": "number", "name": "Screen: Schedule Off Hour", "number": true },
-      "limits": { "min": 0, "max": 23, "step": 1, "suffix": "h" }
+      "limits": { "min": 0, "max": 23, "step": 1, "suffix": "h" },
+      "docs": {
+        "section": "Night Schedule",
+        "order": 30,
+        "label": "Off Time",
+        "description": "Hour when the screen turns off for the schedule."
+      }
     },
     {
       "key": "schedule_wake_timeout",
       "default": 60,
       "entity": { "domain": "number", "name": "Screen: Schedule Wake Timeout", "number": true },
-      "limits": { "min": 10, "max": 3600, "step": 10, "suffix": "s" }
+      "limits": { "min": 10, "max": 3600, "step": 10, "suffix": "s" },
+      "docs": {
+        "section": "Night Schedule",
+        "order": 40,
+        "label": "When Woken, Idle Time To Screen Off",
+        "description": "How long a temporary touch wake lasts during scheduled off hours."
+      }
     },
     {
       "key": "screen_warmth_day",
       "default": 30,
       "entity": { "domain": "number", "name": "Day: Screen Warmth", "number": true },
-      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" },
+      "docs": {
+        "section": "Screen Tone",
+        "order": 10,
+        "label": "Day Screen Warmth",
+        "description": "Warmth applied to album art during the day. 0% means no tint, 100% means maximum warmth.",
+        "badge": "ESP32-P4 only"
+      }
     },
     {
       "key": "screen_warmth_night",
       "default": 60,
       "entity": { "domain": "number", "name": "Night: Screen Warmth", "number": true },
-      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" }
+      "limits": { "min": 0, "max": 100, "step": 5, "suffix": "%" },
+      "docs": {
+        "section": "Screen Tone",
+        "order": 20,
+        "label": "Night Screen Warmth",
+        "description": "Warmth applied to album art at night. 0% means no tint, 100% means maximum warmth.",
+        "badge": "ESP32-P4 only"
+      }
     },
     {
       "key": "clock_time_format",
       "default": "24 Hour",
-      "entity": { "domain": "select", "name": "Clock: Time Format", "optionsKey": "clock_time_format_options" }
+      "entity": { "domain": "select", "name": "Clock: Time Format", "optionsKey": "clock_time_format_options" },
+      "docs": {
+        "section": "Clock",
+        "order": 10,
+        "label": "Clock Format",
+        "description": "Display the clock screen saver in 24-hour or 12-hour format. The 12-hour format omits AM/PM so the large clock still fits and can drift for burn-in prevention."
+      }
     },
     {
       "key": "clock_timezone",
       "default": "UTC (GMT+0)",
-      "entity": { "domain": "select", "name": "Screen: Timezone", "optionsKey": "clock_timezone_options" }
+      "entity": { "domain": "select", "name": "Screen: Timezone", "optionsKey": "clock_timezone_options" },
+      "docs": {
+        "section": "Clock",
+        "order": 20,
+        "label": "Timezone",
+        "description": "IANA-style timezone for the clock and scheduled screen-off controls. The browser shows the current GMT offset."
+      }
     },
     {
       "key": "screen_rotation",
       "default": "0",
-      "entity": { "domain": "select", "name": "Screen Rotation", "optionsKey": "screen_rotation_options" }
+      "entity": { "domain": "select", "name": "Screen Rotation", "optionsKey": "screen_rotation_options" },
+      "docs": {
+        "section": "Rotation",
+        "order": 10,
+        "label": "Screen Rotation",
+        "description": "Rotation control shown only on devices that support changing orientation from the browser UI.",
+        "badge": "supported panels"
+      }
     },
     {
       "key": "auto_update",
       "default": true,
-      "entity": { "domain": "switch", "name": "Firmware: Auto Update", "bool": true }
+      "entity": { "domain": "switch", "name": "Firmware: Auto Update", "bool": true },
+      "docs": {
+        "section": "Firmware",
+        "order": 30,
+        "label": "Auto Update",
+        "description": "When enabled, firmware updates are installed automatically when detected."
+      }
     },
     {
       "key": "update_frequency",
       "default": "Daily",
-      "entity": { "domain": "select", "name": "Firmware: Update Frequency", "optionsKey": "update_frequency_options" }
+      "entity": { "domain": "select", "name": "Firmware: Update Frequency", "optionsKey": "update_frequency_options" },
+      "docs": {
+        "section": "Firmware",
+        "order": 40,
+        "label": "Update Frequency",
+        "description": "How often the device checks for updates. Hidden when Auto Update is off."
+      }
     },
     {
       "key": "firmware_version",
@@ -183,11 +382,23 @@
     },
     {
       "key": "firmware_update",
-      "entity": { "domain": "update", "name": "Firmware: Update", "update": true }
+      "entity": { "domain": "update", "name": "Firmware: Update", "update": true },
+      "docs": {
+        "section": "Firmware",
+        "order": 20,
+        "label": "Install Update",
+        "description": "Installs the checked update when one is available."
+      }
     },
     {
       "key": "check_latest",
-      "entity": { "domain": "button", "name": "Firmware: Check for Update", "skipFetch": true }
+      "entity": { "domain": "button", "name": "Firmware: Check for Update", "skipFetch": true },
+      "docs": {
+        "section": "Firmware",
+        "order": 10,
+        "label": "Check for Update",
+        "description": "Checks public releases without installing. The same browser button changes to Install Update after a newer version is found."
+      }
     },
     {
       "key": "developer_experimental_features",
@@ -226,5 +437,21 @@
     "firmware_release_url": "",
     "firmware_checking": false,
     "update_available": false
-  }
+  },
+  "docs_sections": [
+    { "title": "Media Player", "order": 10 },
+    { "title": "Advanced", "order": 20 },
+    { "title": "Playback", "order": 30 },
+    { "title": "Volume", "order": 40, "summary": "The volume section controls whether the speaker panel closes automatically after a short delay." },
+    { "title": "Idle Screen", "order": 50 },
+    { "title": "Screen Saver", "order": 60, "summary": "The browser Settings tab groups screen saver controls into idle screen dimming, screen saver timing, and night schedule behavior. See Screen Saver for the full behavior details." },
+    { "title": "Night Schedule", "order": 70 },
+    { "title": "Device", "order": 80, "summary": "The browser Device tab contains clock settings, day/night source, active screen brightness, screen tone, supported rotation controls, and firmware update controls.", "settings": [] },
+    { "title": "Clock", "order": 90 },
+    { "title": "Day/Night", "order": 100 },
+    { "title": "Screen Brightness", "order": 110 },
+    { "title": "Screen Tone", "order": 120, "summary": "Shifts album art toward warmer colors for a more comfortable viewing experience, especially at night. Separate day and night sliders follow the same day/night detection used by screen brightness. The tint updates instantly without reloading the image." },
+    { "title": "Rotation", "order": 130 },
+    { "title": "Firmware", "order": 140 }
+  ]
 }

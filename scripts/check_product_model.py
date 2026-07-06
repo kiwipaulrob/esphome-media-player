@@ -97,6 +97,11 @@ def check_settings() -> None:
     catalog = load_settings_catalog()
     settings = catalog["settings"]
     assert_unique((setting["key"] for setting in settings), "setting keys")
+    docs_sections = catalog.get("docs_sections", [])
+    if not isinstance(docs_sections, list) or not docs_sections:
+        fail("product/settings.json must define docs_sections")
+    assert_unique((section["title"] for section in docs_sections), "settings docs sections")
+    docs_section_titles = {section["title"] for section in docs_sections}
 
     firmware_yaml = "\n".join(
         path.read_text()
@@ -106,6 +111,15 @@ def check_settings() -> None:
     )
 
     for setting in settings:
+        docs = setting.get("docs")
+        if docs:
+            if docs["section"] not in docs_section_titles:
+                fail(f"Setting {setting['key']} references unknown docs section {docs['section']!r}")
+            if not str(docs.get("label", "")).strip():
+                fail(f"Setting {setting['key']} docs label is empty")
+            if not str(docs.get("description", "")).strip():
+                fail(f"Setting {setting['key']} docs description is empty")
+
         entity = setting.get("entity")
         if not entity:
             continue
@@ -127,6 +141,13 @@ def check_settings() -> None:
                 invalid = [value for value in options if value < min_value or value > max_value]
                 if invalid:
                     fail(f"Setting {setting['key']} has options outside its limits: {invalid}")
+
+    settings_md = read(ROOT / "docs" / "features" / "settings.md")
+    theme_index = read(ROOT / "docs" / ".vitepress" / "theme" / "index.js")
+    if "<SettingsReference />" not in settings_md:
+        fail("docs/features/settings.md must render settings from product/settings.json")
+    if "SettingsReference" not in theme_index:
+        fail("docs/.vitepress/theme/index.js must register SettingsReference")
 
 
 def main() -> int:

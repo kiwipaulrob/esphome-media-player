@@ -12,5 +12,6 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('InstallButton', defineAsyncComponent(() => import('./components/InstallButton.vue')))
+    app.component('SettingsReference', defineAsyncComponent(() => import('./components/SettingsReference.vue')))
   },
 }
