@@ -41,6 +41,8 @@ globals:
 packages:
   time_sync: !include ../addon/time.yaml
   timezone: !include ../addon/timezone.yaml
+  esphome_ota: !include ../addon/esphome_ota.yaml
+  home_assistant_api: !include ../addon/home_assistant_api.yaml
   music: !include ../addon/music.yaml
   backlight: !include ../addon/backlight.yaml
   network: !include ../addon/network.yaml

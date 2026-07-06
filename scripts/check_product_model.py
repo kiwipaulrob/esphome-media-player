@@ -138,6 +138,25 @@ def check_devices() -> None:
     if duplicated_rotation_files:
         fail(f"Screen Rotation select must stay shared; remove duplicated device definitions in {duplicated_rotation_files}")
 
+    lifecycle_addons = {
+        "esphome_ota": "../addon/esphome_ota.yaml",
+        "home_assistant_api": "../addon/home_assistant_api.yaml",
+    }
+    for package_name, include_path in lifecycle_addons.items():
+        if f"{package_name}: !include {include_path}" not in base_yaml:
+            fail(f"common/device/base.yaml must include the shared {package_name} addon")
+    if "platform: esphome" not in read(ROOT / "common" / "addon" / "esphome_ota.yaml"):
+        fail("common/addon/esphome_ota.yaml must define ESPHome OTA behavior")
+    if "api:" not in read(ROOT / "common" / "addon" / "home_assistant_api.yaml"):
+        fail("common/addon/home_assistant_api.yaml must define the Home Assistant API behavior")
+    duplicated_lifecycle_files = [
+        str(path.relative_to(ROOT))
+        for path in (ROOT / "devices").glob("*/device/device.yaml")
+        if re.search(r"^(api|ota):\s*$", read(path), re.MULTILINE)
+    ]
+    if duplicated_lifecycle_files:
+        fail(f"OTA/API lifecycle behavior must stay shared; remove duplicated device definitions in {duplicated_lifecycle_files}")
+
     release_yml = read(ROOT / ".github" / "workflows" / "release.yml")
     if "python3 scripts/product_model.py release-matrix" not in release_yml:
         fail("release.yml must build its device matrix from product/devices.json")

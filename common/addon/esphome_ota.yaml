@@ -1,0 +1,21 @@
+# =============================================================================
+# ESPHOME OTA UPDATES
+# =============================================================================
+# Handles manual ESPHome OTA uploads. Release-based HTTP updates are defined in
+# firmware_update.yaml; both OTA providers share the same screen-safety behavior.
+# =============================================================================
+
+ota:
+  - platform: esphome
+    on_begin:
+      - lambda: 'global_preferences->sync();'
+      - lvgl.pause
+      - light.turn_off:
+          id: backlight
+          transition_length: 0s
+    on_error:
+      - light.turn_on:
+          id: backlight
+          brightness: 100%
+          transition_length: 0s
+      - lvgl.resume
