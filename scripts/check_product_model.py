@@ -58,6 +58,18 @@ def check_devices() -> None:
     assert_unique((device.web_slug for device in devices), "web slugs")
     assert_unique((device.config for device in devices), "device configs")
     assert_unique((str(device.docs["order"]) for device in devices), "docs order values")
+    build_config_names = [device.config for device in devices]
+    for device in devices:
+        aliases = device.build_aliases or []
+        if not isinstance(aliases, list):
+            fail(f"{device.asset_slug} build_aliases must be a list in product/devices.json")
+        for alias in aliases:
+            if not isinstance(alias, str) or not alias.strip():
+                fail(f"{device.asset_slug} build_aliases entries must be non-empty strings")
+            if alias.endswith(".yaml") or "/" in alias:
+                fail(f"{device.asset_slug} build alias {alias!r} must be a plain build config name")
+            build_config_names.append(alias)
+    assert_unique(build_config_names, "build config names")
 
     for device in devices:
         if not device.factory_yaml.is_file():

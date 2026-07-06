@@ -106,7 +106,10 @@
         "slots": 6,
         "cols": 2,
         "rows": 3
-      }
+      },
+      "build_aliases": [
+        "guition-esp32-p4-jc4880p443-90"
+      ]
     },
     {
       "profile": "esp32-p4-86-panel",

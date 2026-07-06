@@ -33,6 +33,7 @@ class Device:
     purchase: dict[str, Any]
     display: dict[str, Any]
     installer: dict[str, Any]
+    build_aliases: list[str] | None = None
 
     @property
     def factory_yaml(self) -> Path:
