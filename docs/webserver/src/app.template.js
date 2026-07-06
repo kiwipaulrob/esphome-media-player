@@ -31,7 +31,7 @@
   var SETTING_OPTIONS = __WEB_SETTING_OPTIONS__;
   var SPEAKER_PANEL_TIMEOUT_OPTIONS = SETTING_OPTIONS.speaker_panel_timeout;
   var TRACK_INFO_DURATION_OPTIONS = SETTING_OPTIONS.track_info_duration;
-  var S3_DEVICE_PROFILE = "guition-esp32-s3-4848s040";
+  var WEB_DEVICE_PROFILES = __WEB_DEVICE_PROFILES__;
   var WEB_ACTIVITY_HEARTBEAT_MS = 10000;
   var FIRMWARE_INSTALL_REFRESH_MS = 5000;
   var FIRMWARE_INSTALL_REFRESH_TIMEOUT_MS = 300000;
@@ -146,8 +146,13 @@
     });
   }
 
+  function hasDeviceProfile(group) {
+    var profiles = WEB_DEVICE_PROFILES[group] || [];
+    return profiles.indexOf(S.device_profile) !== -1;
+  }
+
   function isS3Display() {
-    return S.device_profile === S3_DEVICE_PROFILE;
+    return hasDeviceProfile("esp32_s3");
   }
 
   function isDeveloperExperimentalMode() {
@@ -455,7 +460,7 @@
   }
 
   function supportsTrackInfoDuration() {
-    return S.device_profile === "esp32-p4-86-panel" || S.device_profile === "guition-esp32-s3-4848s040";
+    return hasDeviceProfile("track_info_duration");
   }
 
   function idleScreenCard() {
@@ -646,7 +651,7 @@
   }
 
   function supportsScreenRotation() {
-    return S.device_profile === "esp32-p4-86-panel" || S.device_profile === "guition-esp32-p4-jc4880p443" || S.device_profile === "guition-esp32-p4-jc1060p470" || S.device_profile === "guition-esp32-p4-jc8012p4a1" || S.device_profile === "guition-esp32-s3-4848s040";
+    return hasDeviceProfile("screen_rotation");
   }
 
   function supportsClockScreenSaver() {

@@ -335,6 +335,17 @@ def check_devices() -> None:
     if hardcoded_entries:
         fail(f"release.yml contains hard-coded device entries: {hardcoded_entries}")
 
+    web_template = read(ROOT / "docs" / "webserver" / "src" / "app.template.js")
+    if "__WEB_DEVICE_PROFILES__" not in web_template:
+        fail("docs/webserver/src/app.template.js must use product-model web device profile groups")
+    hardcoded_web_profiles = [
+        device.profile
+        for device in devices
+        if f'"{device.profile}"' in web_template or f"'{device.profile}'" in web_template
+    ]
+    if hardcoded_web_profiles:
+        fail(f"Webserver source contains hard-coded device profiles: {hardcoded_web_profiles}")
+
 
 def name_patterns(name: str) -> tuple[str, str]:
     return (f'name: "{name}"', f"name: {name}")

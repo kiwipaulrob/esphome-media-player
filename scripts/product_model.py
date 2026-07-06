@@ -96,6 +96,19 @@ def firmware_manifest_slugs() -> dict[str, str]:
     return {device.profile: device.web_slug for device in load_devices()}
 
 
+def web_device_profiles() -> dict[str, list[str]]:
+    devices = load_devices()
+    return {
+        "esp32_s3": [device.profile for device in devices if device.chip == "ESP32-S3"],
+        "screen_rotation": [device.profile for device in devices],
+        "track_info_duration": [
+            device.profile
+            for device in devices
+            if device.display.get("shape") == "square"
+        ],
+    }
+
+
 def install_devices() -> list[dict[str, Any]]:
     devices = sorted(load_devices(), key=lambda device: int(device.installer["order"]))
     return [
