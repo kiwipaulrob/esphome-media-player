@@ -79,6 +79,19 @@ def check_devices() -> None:
     if "deviceSidebarItems" not in vitepress_config or "product/devices.json" not in vitepress_config:
         fail("docs/.vitepress/config.js must build the device sidebar from product/devices.json")
 
+    theme_index = read(ROOT / "docs" / ".vitepress" / "theme" / "index.js")
+    supported_devices = read(ROOT / "docs" / ".vitepress" / "theme" / "components" / "SupportedDevices.vue")
+    installation_md = read(ROOT / "docs" / "installation.md")
+    release_docs = read(ROOT / "docs" / "development" / "release-versioning-improvements.md")
+    if "SupportedDevices" not in theme_index:
+        fail("docs/.vitepress/theme/index.js must register SupportedDevices")
+    if "product/devices.json" not in supported_devices:
+        fail("SupportedDevices.vue must render from product/devices.json")
+    if "<SupportedDevices />" not in installation_md:
+        fail("docs/installation.md must render supported devices from product/devices.json")
+    if '<SupportedDevices mode="release" />' not in release_docs:
+        fail("release-versioning-improvements.md must render release devices from product/devices.json")
+
     release_yml = read(ROOT / ".github" / "workflows" / "release.yml")
     if "python3 scripts/product_model.py release-matrix" not in release_yml:
         fail("release.yml must build its device matrix from product/devices.json")
