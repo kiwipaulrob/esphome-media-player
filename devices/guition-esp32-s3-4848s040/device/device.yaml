@@ -807,9 +807,10 @@ display:
     model: GUITION-4848S040
     id: my_display
     color_order: RGB
-    # Keep the panel at the Guition default and use a larger LVGL draw buffer to
-    # reduce visible redraw bands without changing panel timing.
-    pclk_frequency: 12MHz
+    setup_priority: 240
+    # Match the stable EspControl S3 panel timing. Higher clocks have caused
+    # screen shifts and pixel breakup while Wi-Fi and display updates compete.
+    pclk_frequency: 10MHz
     update_interval: never
     auto_clear_enabled: False
     transform:

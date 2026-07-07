@@ -7,8 +7,13 @@
 
 lvgl:
   id: main_lvgl
-  buffer_size: 50%
+  setup_priority: 230
+  buffer_size: 12%
+  displays: my_display
   rotation: ${display_rotation}
+  touchscreens:
+    - touchscreen_id: tft_touch
+      long_press_time: 3s
   on_boot:
     - lambda: |-
         lv_obj_clear_flag(id(speakers_container), LV_OBJ_FLAG_SCROLL_MOMENTUM);
