@@ -807,9 +807,9 @@ display:
     model: GUITION-4848S040
     id: my_display
     color_order: RGB
-    # 12 MHz is the Guition model default and leaves more DMA margin during
-    # touch-triggered LVGL redraws on ESPHome 2026.6.
-    pclk_frequency: 12MHz
+    # Lowered from the Guition 12 MHz default to reduce visible refresh during
+    # touch-triggered LVGL redraws.
+    pclk_frequency: 10MHz
     update_interval: never
     auto_clear_enabled: False
     transform:
