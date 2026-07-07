@@ -807,9 +807,9 @@ display:
     model: GUITION-4848S040
     id: my_display
     color_order: RGB
-    # Lowered from the Guition 12 MHz default to reduce visible refresh during
-    # touch-triggered LVGL redraws.
-    pclk_frequency: 10MHz
+    # Keep the panel at the Guition default and use a larger LVGL draw buffer to
+    # reduce visible redraw bands without changing panel timing.
+    pclk_frequency: 12MHz
     update_interval: never
     auto_clear_enabled: False
     transform:
