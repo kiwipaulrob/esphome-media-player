@@ -154,7 +154,7 @@ script:
           condition:
             lambda: |-
               const std::string &url = id(is_tv_mode) ? id(last_tv_artwork_url) : id(last_artwork_url);
-              return !url.empty() && id(artwork_retry_attempts) < 5;
+              return !url.empty() && id(artwork_retry_attempts) < 5 && id(artwork_retry_pending);
           then:
             - lambda: |-
                 id(artwork_retry_pending) = true;
@@ -171,6 +171,11 @@ script:
                 uint32_t device_spread_ms = static_cast<uint32_t>(id(artwork_retry_stagger_ms));
                 return static_cast<uint32_t>(backoff_ms + device_spread_ms);
             - lambda: |-
+                // Skip retry if a newer URL was set since the error occurred
+                if (!id(artwork_retry_pending)) {
+                  ESP_LOGD("artwork", "Skipping retry — newer URL was set since error");
+                  return;
+                }
                 auto *img = id(is_tv_mode) ? id(tv_art_background) : id(album_art_background);
                 const std::string &url = id(is_tv_mode) ? id(last_tv_artwork_url) : id(last_artwork_url);
                 if (!url.empty()) {

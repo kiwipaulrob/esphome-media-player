@@ -195,6 +195,7 @@ script:
           sub_text("media_title", id(media_title_sensor));
           sub_text("media_artist", id(media_artist_sensor));
           sub_text("entity_picture", id(media_entity_picture_sensor));
+          sub_text("entity_picture_local", id(media_entity_picture_local_sensor));
 
           // Main state (playing/paused/idle) — empty attribute = entity state
           api->subscribe_home_assistant_state(entity, esphome::optional<std::string>(""),
@@ -282,6 +283,7 @@ script:
           sub_text("media_title", id(tv_media_title_sensor));
           sub_text("media_artist", id(tv_media_artist_sensor));
           sub_text("entity_picture", id(tv_entity_picture_sensor));
+          sub_text("entity_picture_local", id(tv_entity_picture_local_sensor));
 
           api->subscribe_home_assistant_state(entity, esphome::optional<std::string>(""),
               state_cb([gen, gen_ptr](esphome::StringRef state) {

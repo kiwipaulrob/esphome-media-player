@@ -355,9 +355,30 @@ text_sensor:
           condition:
             lambda: |-
               if (id(is_tv_mode) || x.empty()) return false;
+              // Prefer local artwork URL if available
+              if (id(media_entity_picture_local_sensor).has_state() && !id(media_entity_picture_local_sensor).state.empty()) return false;
               std::string path = x;
               while (!path.empty() && (path.back() == '\n' || path.back() == '\r' || path.back() == ' ')) path.pop_back();
               std::string new_url = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
+              new_url = esphome::artwork_image::cap_artwork_url(new_url, ${artwork_size});
+              if (new_url == id(last_artwork_url)) return false;
+              id(last_artwork_url) = new_url;
+              return true;
+          then:
+            - script.execute: debounce_artwork_download
+
+  - platform: template
+    id: media_entity_picture_local_sensor
+    internal: true
+    on_value:
+      - if:
+          condition:
+            lambda: |-
+              if (id(is_tv_mode) || x.empty()) return false;
+              std::string path = x;
+              while (!path.empty() && (path.back() == '\n' || path.back() == '\r' || path.back() == ' ')) path.pop_back();
+              // entity_picture_local is always a relative path in MA
+              std::string new_url = id(ha_base_url) + path;
               new_url = esphome::artwork_image::cap_artwork_url(new_url, ${artwork_size});
               if (new_url == id(last_artwork_url)) return false;
               id(last_artwork_url) = new_url;
@@ -435,16 +456,20 @@ text_sensor:
                       condition:
                         lambda: |-
                           return id(last_artwork_url).empty()
-                              && id(media_entity_picture_sensor).has_state()
-                              && !id(media_entity_picture_sensor).state.empty();
+                              && ((id(media_entity_picture_local_sensor).has_state() && !id(media_entity_picture_local_sensor).state.empty())
+                                  || (id(media_entity_picture_sensor).has_state() && !id(media_entity_picture_sensor).state.empty()));
                       then:
                         - lambda: |-
-                            std::string path = id(media_entity_picture_sensor).state;
+                            std::string path;
+                            if (id(media_entity_picture_local_sensor).has_state() && !id(media_entity_picture_local_sensor).state.empty()) {
+                              path = id(media_entity_picture_local_sensor).state;
+                            } else {
+                              path = id(media_entity_picture_sensor).state;
+                            }
                             while (!path.empty() && (path.back() == '\n' || path.back() == '\r' || path.back() == ' ')) path.pop_back();
                             id(last_artwork_url) = (path.substr(0, 7) == "http://" || path.substr(0, 8) == "https://") ? path : (id(ha_base_url) + path);
                             id(last_artwork_url) = esphome::artwork_image::cap_artwork_url(id(last_artwork_url), ${artwork_size});
                         - script.execute: debounce_artwork_download
-                  - script.execute: start_hide_track_info_timer
                   - script.execute: refresh_progress_bar_from_state
                 else:
                   - if:
