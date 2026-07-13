@@ -65,6 +65,7 @@ esphome:
       - number.set:
           id: track_info_duration
           value: 0
+      - lambda: 'ESP_LOGI("backlight", "on_boot: track_info_duration forced to 0");'
 
 
 # -----------------------------------------------------------------------------
