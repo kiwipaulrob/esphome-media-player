@@ -808,8 +808,10 @@ script:
     mode: restart
     then:
       - lambda: |-
-          if (esphome::api::global_api_server == nullptr) return;
           std::string entity = id(day_night_sensor_entity).state;
+          // Handle empty and invalid cases before the API server check,
+          // so publish_state("") and apply_day_night_backlight work even
+          // during early boot when the API hasn't connected yet.
           if (entity.empty()) {
             id(subscribed_day_night_sensor_entity) = "";
             id(day_night_subscription_gen) += 1;
@@ -821,6 +823,7 @@ script:
             id(day_night_sensor_entity).publish_state("");
             return;
           }
+          if (esphome::api::global_api_server == nullptr) return;
           if (entity == id(subscribed_day_night_sensor_entity)) {
             ESP_LOGD("backlight", "Already subscribed to day/night sensor '%s'", entity.c_str());
             return;
