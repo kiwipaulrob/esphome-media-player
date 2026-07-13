@@ -5,6 +5,7 @@
 # =============================================================================
 
 api:
+  max_connections: 15
   on_client_connected:
     - lambda: |-
         if (client_info.find("Home Assistant") != std::string::npos) {
