@@ -817,9 +817,8 @@ script:
             return;
           }
           if (entity.substr(0, 14) != "binary_sensor." && entity.substr(0, 14) != "input_boolean.") {
-            ESP_LOGW("backlight", "Invalid day/night entity '%s' — must start with 'binary_sensor.' or 'input_boolean.'", entity.c_str());
-            id(subscribed_day_night_sensor_entity) = "";
-            id(day_night_subscription_gen) += 1;
+            ESP_LOGW("backlight", "Invalid day/night entity '%s' — resetting to empty (sun.sun fallback)", entity.c_str());
+            id(day_night_sensor_entity).publish_state("");
             return;
           }
           if (entity == id(subscribed_day_night_sensor_entity)) {
