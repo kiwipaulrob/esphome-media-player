@@ -402,6 +402,9 @@ std::shared_ptr<http_request::HttpContainer> ArtworkImage::get_local_idf_(
   config.max_redirection_count = 3;
   config.auth_type = HTTP_AUTH_TYPE_BASIC;
   config.event_handler = insecure_local_http_event_handler;
+  // Force TCP transport for HTTP URLs — the esp-tls layer is not needed
+  // and can fail with 'Failed to create socket' on busy API connections.
+  config.transport_type = HTTP_TRANSPORT_OVER_TCP;
 
   esp_http_client_handle_t client = esp_http_client_init(&config);
   if (client == nullptr) {

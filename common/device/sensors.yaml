@@ -263,7 +263,7 @@ script:
           then:
             - lvgl.widget.hide: artwork_error_label
             - lambda: |-
-                id(artwork_retry_pending) = false;
+                id(artwork_retry_pending) = true;
                 id(artwork_retry_attempts) = 0;
             - if:
                 condition:
