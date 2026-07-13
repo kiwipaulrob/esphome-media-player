@@ -76,12 +76,6 @@ esphome:
 # -----------------------------------------------------------------------------
 logger:
   hardware_uart: UART0
-  level: VERBOSE
-  logs:
-    backlight: VERBOSE
-    media_select: VERBOSE
-    artwork: VERBOSE
-    lvgl: INFO
 
 
 # -----------------------------------------------------------------------------
@@ -97,21 +91,6 @@ logger:
 psram:
   mode: octal
   speed: 40MHz
-
-
-# -----------------------------------------------------------------------------
-# MEMORY MONITOR
-# -----------------------------------------------------------------------------
-# Logs free PSRAM and internal heap every 60s to diagnose OOM crashes.
-# -----------------------------------------------------------------------------
-interval:
-  - interval: 60s
-    then:
-      - lambda: |-
-          ESP_LOGI("memory", "Free heap: %u bytes, Free PSRAM: %u bytes, Min free heap: %u bytes",
-            (unsigned int)esp_get_free_heap_size(),
-            (unsigned int)esp_get_free_internal_heap_size(),
-            (unsigned int)esp_get_minimum_free_heap_size());
 
 
 # -----------------------------------------------------------------------------

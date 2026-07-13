@@ -530,9 +530,6 @@ script:
                             ? (!id(sun_state_sensor).has_state() || id(sun_state_sensor).state == "above_horizon")
                             : id(custom_day_night_is_day);
                         float pct = is_day ? id(clock_brightness).state : id(evening_clock_brightness).state;
-                        ESP_LOGI("backlight", "Clock brightness: %.0f%% (is_day=%d, sun_has_state=%d, sun=%s)",
-                          pct, is_day, id(sun_state_sensor).has_state(),
-                          id(sun_state_sensor).has_state() ? id(sun_state_sensor).state.c_str() : "n/a");
                         if (!(pct > 0.0f)) pct = 35.0f;
                         if (pct < 1.0f) pct = 1.0f;
                         if (pct > 100.0f) pct = 100.0f;
@@ -812,14 +809,10 @@ script:
     then:
       - lambda: |-
           std::string entity = id(day_night_sensor_entity).state;
-          ESP_LOGI("backlight", "subscribe_day_night_sensor: entity=\"%s\" (empty=%d, api=%s)",
-            entity.c_str(), entity.empty(),
-            esphome::api::global_api_server == nullptr ? "null" : "ready");
           // Handle empty and invalid cases before the API server check,
           // so publish_state("") and apply_day_night_backlight work even
           // during early boot when the API hasn't connected yet.
           if (entity.empty()) {
-            ESP_LOGI("backlight", "subscribe_day_night_sensor: empty → apply_day_night_backlight (sun.sun fallback)");
             id(subscribed_day_night_sensor_entity) = "";
             id(day_night_subscription_gen) += 1;
             id(apply_day_night_backlight).execute();
@@ -831,11 +824,9 @@ script:
             return;
           }
           if (esphome::api::global_api_server == nullptr) {
-            ESP_LOGD("backlight", "subscribe_day_night_sensor: api null, will retry on next trigger");
             return;
           }
           if (entity == id(subscribed_day_night_sensor_entity)) {
-            ESP_LOGD("backlight", "Already subscribed to day/night sensor '%s'", entity.c_str());
             return;
           }
           id(day_night_subscription_gen) += 1;
@@ -849,4 +840,3 @@ script:
                 id(custom_day_night_is_day) = (state == "on");
                 id(apply_day_night_backlight).execute();
               }));
-          ESP_LOGI("backlight", "Subscribed to day/night sensor '%s'", entity.c_str());
