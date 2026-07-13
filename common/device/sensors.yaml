@@ -236,6 +236,7 @@ script:
           condition:
             lambda: 'return !id(web_settings_active) && id(track_info_duration).state > 0;'
           then:
+            - lambda: 'ESP_LOGI("backlight", "start_hide_track_info_timer: will fire in %.0fs", id(track_info_duration).state);'
             - delay: !lambda 'return (uint32_t)(id(track_info_duration).state * 1000);'
             - if:
                 condition:
@@ -249,6 +250,9 @@ script:
                     return !id(web_settings_active) && !id(is_ui_hidden) && playing;
                 then:
                   - script.execute: toggle_ui
+                  - lambda: 'ESP_LOGI("backlight", "start_hide_track_info_timer: FIRED → toggle_ui");'
+          else:
+            - lambda: 'ESP_LOGD("backlight", "start_hide_track_info_timer: skipped (duration=%.0f or web_settings)", id(track_info_duration).state);'
 
   - id: debounce_artwork_download
     mode: restart

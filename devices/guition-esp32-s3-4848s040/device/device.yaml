@@ -76,6 +76,12 @@ esphome:
 # -----------------------------------------------------------------------------
 logger:
   hardware_uart: UART0
+  level: VERBOSE
+  logs:
+    backlight: VERBOSE
+    media_select: VERBOSE
+    artwork: VERBOSE
+    lvgl: INFO
 
 
 # -----------------------------------------------------------------------------
