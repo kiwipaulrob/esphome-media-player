@@ -55,6 +55,16 @@ esp32:
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
+  on_boot:
+    priority: 200
+    then:
+      # Force track_info_duration to 0 on every boot, overriding any stale
+      # NVS value (e.g. the old 5s default). Without this, restore_value
+      # keeps the old duration, the start_hide_track_info_timer fires, and
+      # the overlay auto-hides while artwork is still loading.
+      - number.set:
+          id: track_info_duration
+          value: 0
 
 
 # -----------------------------------------------------------------------------
